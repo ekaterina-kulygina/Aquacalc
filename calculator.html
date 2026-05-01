@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AquaCalc — Калькулятор</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+@font-face{font-family:'Nobile';src:url('fonts/Nobile-Regular.ttf') format('truetype');font-weight:400;font-style:normal}
+@font-face{font-family:'Nobile';src:url('fonts/Nobile-Medium.ttf') format('truetype');font-weight:500;font-style:normal}
+@font-face{font-family:'Nobile';src:url('fonts/Nobile-Bold.ttf') format('truetype');font-weight:700;font-style:normal}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F5F7FA;min-height:100vh}
+
+/* NAV */
+nav{background:#fff;border-bottom:1px solid #DDE5F0;position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.nav-logo{font-family:'Nobile',sans-serif;font-size:18px;font-weight:700;letter-spacing:-.02em;display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0}
+.nav-logo-icon{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#28B0D8,#1A8FB2);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(40,176,216,.35);flex-shrink:0}
+.nav-pill{font-size:11px;font-weight:600;color:#1A7A96;background:#E0F6FC;padding:3px 10px;border-radius:100px;border:1px solid #A8E8F8;font-family:'Inter',sans-serif}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.nav-btn{padding:7px 16px;border-radius:9px;font-size:13px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer;text-decoration:none;transition:all .15s;border:1.5px solid #DDE5F0;background:#fff;color:#64748B}
+.nav-btn:hover{border-color:#28B0D8;color:#28B0D8}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon"><svg width="13" height="13" viewBox="0 0 15 15" fill="none"><path d="M3 12V5.5l4.5-4L12 5.5V12M5.5 12V9h4v3" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <span style="color:#0F172A">Aqua<span style="color:#28B0D8">Calc</span></span>
+    </a>
+    <span class="nav-pill">Доступ активен</span>
+    <div class="nav-actions">
+      <a href="index.html" class="nav-btn">← На главную</a>
+    </div>
+  </div>
+</nav>
+
+<div id="root"></div>
+
+<script type="text/babel">
+
+const FERT_DB = {
+  'Aquayer': [
+    {id:'aq-m',name:'Macro',no3:52,po4:8.7,k:24,fe:0,mn:0,mg:0,ca:0,so4:0},
+    {id:'aq-mi',name:'Micro',no3:0,po4:0,k:0,fe:4,mn:0.5,mg:0,ca:0,so4:0},
+    {id:'aq-k',name:'Калий',no3:0,po4:0,k:60,fe:0,mn:0,mg:0,ca:0,so4:0},
+    {id:'aq-fe',name:'Железо',no3:0,po4:0,k:0,fe:6,mn:0,mg:0,ca:0,so4:0},
+    {id:'aq-no3',name:'Нитрат',no3:80,po4:0,k:0,fe:0,mn:0,mg:0,ca:0,so4:0},
+    {id:'aq-gh',name:'GH+',no3:0,po4:0,k:0,fe:0,mn:0,mg:8,ca:16,so4:0},
+  ],
+  'Dennerle': [
+    {id:'d-pro',name:'Plant Care Pro',no3:4,po4:0.8,k:12,fe:0.5,mn:0.1,mg:2,ca:0,so4:3},
+    {id:'d-n',name:'Plant Care N',no3:40,po4:0,k:0,fe:0,mn:0,mg:0,ca:0,so4:0},
+    {id:'d-p',name:'Plant Care P',no3:0,po4:20,k:0,fe:0,mn:0,mg:0,ca:0,so4:0},
+    {id:'d-k',name:'Plant Care K',no3:0,po4:0,k:87,fe:0,mn:0,mg:0,ca:0,so4:0},
+  ],
+  'Tropica': [
+    {id:'tr-c',name:'Premium Complete',no3:13,po4:4.5,k:11,fe:0.07,mn:0.05,mg:0,ca:0,so4:0},
+    {id:'tr-s',name:'Specialised',no3:43,po4:15,k:35,fe:0,mn:0,mg:0,ca:0,so4:0},
+  ],
+  'Sera': [
+    {id:'se-m',name:'Florena Macro',no3:40,po4:6,k:20,fe:0,mn:0,mg:0,ca:0,so4:0},
+    {id:'se-mi',name:'Florena Micro',no3:0,po4:0,k:0,fe:3,mn:0.2,mg:0,ca:0,so4:0},
+  ],
+  'JBL': [
+    {id:'jbl-m',name:'ProScape Macro',no3:35,po4:9,k:18,fe:0,mn:0,mg:0,ca:0,so4:0},
+    {id:'jbl-fe',name:'ProScape Fe Micro',no3:0,po4:0,k:0,fe:5,mn:0.3,mg:0,ca:0,so4:0},
+    {id:'jbl-k',name:'ProScape K Macro',no3:0,po4:0,k:65,fe:0,mn:0,mg:0,ca:0,so4:0},
+  ],
+  'Seachem': [
+    {id:'sc-f',name:'Flourish',no3:0,po4:0,k:0,fe:0.05,mn:0.02,mg:0,ca:0,so4:0},
+    {id:'sc-n',name:'Flourish Nitrogen',no3:15,po4:0,k:1,fe:0,mn:0,mg:0,ca:0,so4:0},
+    {id:'sc-p',name:'Flourish Phosphorus',no3:0,po4:30,k:0,fe:0,mn:0,mg:0,ca:0,so4:0},
+    {id:'sc-k',name:'Flourish Potassium',no3:0,po4:0,k:50,fe:0,mn:0,mg:0,ca:0,so4:0},
+    {id:'sc-fe',name:'Flourish Iron',no3:0,po4:0,k:0,fe:10,mn:0,mg:0,ca:0,so4:0},
+  ],
+  'Aqua Botanic': [
+    {id:'ab-m',name:'Macro',no3:45,po4:7,k:22,fe:0,mn:0,mg:0,ca:0,so4:0},
+    {id:'ab-mi',name:'Micro',no3:0,po4:0,k:0,fe:3.5,mn:0.4,mg:0,ca:0,so4:0},
+  ],
+};
+const ELK = ['no3','po4','k','fe','mn','mg','ca','so4'];
+const ELN = {no3:'NO₃',po4:'PO₄',k:'K',fe:'Fe',mn:'Mn',mg:'Mg',ca:'Ca',so4:'SO₄'};
+const ELF = {no3:'Нитрат',po4:'Фосфат',k:'Калий',fe:'Железо',mn:'Марганец',mg:'Магний',ca:'Кальций',so4:'Сульфат'};
+
+function getAllFerts() {
+  const all = {};
+  Object.entries(FERT_DB).forEach(([brand, items]) => items.forEach(f => { all[f.id] = {...f, brand}; }));
+  return all;
+}
+
+const card = {background:'#fff',borderRadius:16,boxShadow:'0 1px 4px rgba(0,0,0,.06)',overflow:'visible'};
+const secHdr = {padding:'12px 18px',borderBottom:'1px solid #DDE5F0',display:'flex',alignItems:'center',gap:8};
+const secBadge = () => ({
+  width:22,height:22,borderRadius:'50%',
+  background:'linear-gradient(135deg,#28B0D8,#1A8FB2)',
+  color:'#fff',fontSize:11,fontWeight:700,fontFamily:"'Nobile',sans-serif",
+  display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,
+  boxShadow:'0 1px 5px rgba(40,176,216,.35)',
+});
+const secTitle = {fontSize:11,fontWeight:700,color:'#64748B',letterSpacing:'.08em',textTransform:'uppercase',fontFamily:"'Nobile',sans-serif"};
+const secBody = {padding:'16px 18px',display:'flex',flexDirection:'column',gap:14};
+
+function InputField({label, unit, value, onChange, placeholder}) {
+  const filled = value !== '';
+  const [focused, setFocused] = React.useState(false);
+  return (
+    <div style={{display:'flex',flexDirection:'column',gap:4}}>
+      <div style={{fontSize:12,color:'#64748B',fontWeight:500,fontFamily:"'Inter',sans-serif"}}>{label}</div>
+      <input
+        type="number" min="1" placeholder={placeholder} value={value}
+        onChange={e => onChange(e.target.value)}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+        style={{
+          width:'100%',padding:'10px 12px',fontSize:14,fontWeight:400,
+          border:`1.5px solid ${focused ? '#28B0D8' : filled ? '#A8E8F8' : '#DDE5F0'}`,
+          borderRadius:10,background: filled ? '#E0F6FC' : '#FAFCFF',
+          color:'#0F172A',fontFamily:"'Inter',sans-serif",outline:'none',
+          boxShadow: focused ? '0 0 0 3px rgba(40,176,216,.12)' : 'none',
+          transition:'all .15s',
+        }}
+      />
+      {unit && <div style={{fontSize:11,color:'#64748B',fontFamily:"'Inter',sans-serif"}}>{unit}</div>}
+    </div>
+  );
+}
+
+function ModeSelector({mode, onMode, customN, onCustomN}) {
+  const hints = {daily:'каждый день',change:'вместе с подменой воды',custom:'в указанные дни'};
+  const pill = (k, label) => (
+    <button key={k} onClick={() => onMode(k)} style={{
+      padding:'7px 13px',border:`1.5px solid ${mode===k?'#A8E8F8':'#DDE5F0'}`,
+      borderRadius:100,fontSize:13,cursor:'pointer',fontFamily:"'Inter',sans-serif",
+      background:mode===k?'#E0F6FC':'#fff',color:mode===k?'#1A7A96':'#64748B',
+      fontWeight:mode===k?600:400,display:'inline-flex',alignItems:'center',gap:5,
+      whiteSpace:'nowrap',transition:'all .12s',
+    }}>
+      {label}
+      {k==='custom' && mode==='custom' && (
+        <input type="number" min="1" max="60" value={customN}
+          onChange={e=>onCustomN(e.target.value)} onClick={e=>e.stopPropagation()}
+          placeholder="N"
+          style={{width:38,padding:'1px 4px',fontSize:13,fontWeight:600,
+            border:'1.5px solid #A8E8F8',borderRadius:6,background:'#fff',
+            color:'#1A7A96',textAlign:'center',fontFamily:"'Inter',sans-serif",outline:'none'}}
+        />
+      )}
+    </button>
+  );
+  return (
+    <div style={{display:'flex',flexDirection:'column',gap:4}}>
+      <div style={{fontSize:12,color:'#64748B',fontWeight:500,fontFamily:"'Inter',sans-serif"}}>Внесение удобрений</div>
+      <div style={{display:'flex',gap:6,flexWrap:'wrap',marginTop:2}}>
+        {pill('daily','Каждый день')}
+        {pill('change','Вместе с подменой')}
+        {pill('custom','Раз в')}
+        {mode==='custom' && !customN && pill('custom',' дней')}
+      </div>
+      <div style={{fontSize:11,color:'#94A3B8',fontFamily:"'Inter',sans-serif",marginTop:2}}>{hints[mode]}</div>
+    </div>
+  );
+}
+
+function FertDropdown({usedIds, onPick}) {
+  const [open, setOpen] = React.useState(false);
+  const [q, setQ] = React.useState('');
+  const ref = React.useRef(null);
+  React.useEffect(() => {
+    const h = e => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+    document.addEventListener('click', h);
+    return () => document.removeEventListener('click', h);
+  }, []);
+  const sq = q.toLowerCase();
+  const filtered = Object.entries(FERT_DB).map(([brand, items]) => {
+    const f = items.filter(i => !sq || i.name.toLowerCase().includes(sq) || brand.toLowerCase().includes(sq));
+    return [brand, f];
+  }).filter(([,f]) => f.length > 0);
+  return (
+    <div ref={ref} style={{position:'relative'}}>
+      {open && (
+        <div style={{
+          position:'absolute',bottom:'calc(100% + 1px)',left:0,right:0,zIndex:500,
+          background:'#fff',border:'1.5px solid #28B0D8',borderRadius:'13px 13px 0 0',
+          boxShadow:'0 -16px 40px rgba(40,176,216,.13)',maxHeight:260,overflow:'hidden',
+          display:'flex',flexDirection:'column',
+        }}>
+          <div style={{overflowY:'auto',flex:1}}>
+            {filtered.map(([brand,items]) => (
+              <React.Fragment key={brand}>
+                <div style={{padding:'7px 13px 3px',fontSize:10,fontWeight:700,color:'#94A3B8',
+                  letterSpacing:'.08em',textTransform:'uppercase',background:'#F5F8FC',
+                  position:'sticky',top:0,fontFamily:"'Nobile',sans-serif"}}>{brand}</div>
+                {items.map(f => {
+                  const used = usedIds.includes(f.id);
+                  return (
+                    <div key={f.id}
+                      onClick={() => { if (!used) { onPick(f.id); setOpen(false); setQ(''); }}}
+                      style={{padding:'9px 13px',fontSize:14,cursor:used?'default':'pointer',
+                        color:used?'#B0BCC8':'#334155',opacity:used?.5:1,fontFamily:"'Inter',sans-serif",
+                        transition:'background .1s'}}
+                      onMouseEnter={e=>{if(!used)e.currentTarget.style.background='#E0F6FC'}}
+                      onMouseLeave={e=>{e.currentTarget.style.background=''}}
+                    >{f.name}{used?' ✓':''}</div>
+                  );
+                })}
+              </React.Fragment>
+            ))}
+            {!filtered.length && <div style={{padding:14,fontSize:13,color:'#64748B',textAlign:'center'}}>Ничего не найдено</div>}
+          </div>
+          <div style={{padding:9,borderTop:'1px solid #DDE5F0',background:'#fff',flexShrink:0}}>
+            <input autoFocus type="text" value={q} onChange={e=>setQ(e.target.value)}
+              onClick={e=>e.stopPropagation()} placeholder="Поиск..."
+              style={{width:'100%',padding:'7px 11px',fontSize:14,border:'1.5px solid #DDE5F0',
+                borderRadius:9,background:'#F5F8FC',color:'#0F172A',fontFamily:"'Inter',sans-serif",outline:'none'}}
+            />
+          </div>
+        </div>
+      )}
+      <button onClick={()=>setOpen(o=>!o)} style={{
+        width:'100%',padding:'10px 34px 10px 13px',fontSize:14,
+        border:`1.5px solid ${open?'#28B0D8':'#DDE5F0'}`,
+        borderRadius:open?'0 0 11px 11px':11,background:open?'#FAFCFF':'#fff',color:'#64748B',
+        cursor:'pointer',textAlign:'left',position:'relative',
+        boxShadow:open?'0 0 0 3px rgba(40,176,216,.10)':'none',
+        fontFamily:"'Inter',sans-serif",transition:'all .15s',
+        whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis',
+      }}>
+        Выбрать удобрение...
+        <svg style={{position:'absolute',right:11,top:'50%',transform:`translateY(-50%) rotate(${open?180:0}deg)`,transition:'transform .2s',color:'#94A3B8'}}
+          width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M3 5l4 4 4-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+        </svg>
+      </button>
+    </div>
+  );
+}
+
+function App() {
+  const [vol, setVol] = React.useState('');
+  const [cvol, setCvol] = React.useState('');
+  const [period, setPeriod] = React.useState('');
+  const [mode, setMode] = React.useState('change');
+  const [customN, setCustomN] = React.useState('');
+  const [entries, setEntries] = React.useState([]);
+  const [colMode, setColMode] = React.useState('daily');
+  const [results, setResults] = React.useState(null);
+  const fertMap = getAllFerts();
+
+  const getFP = () => {
+    const p = parseInt(period)||7;
+    if (mode==='daily') return 1;
+    if (mode==='change') return p;
+    return parseInt(customN)||1;
+  };
+
+  const v = parseFloat(vol), p = parseInt(period);
+  const customOk = mode!=='custom'||parseInt(customN)>0;
+  const fertOk = entries.length>0 && entries.every(e=>parseFloat(e.dose)>0);
+  const canCalc = v>0 && p>0 && customOk && fertOk;
+  let hint = '';
+  if (!canCalc) {
+    if (!v) hint='Укажите объём аквариума';
+    else if (!p) hint='Укажите периодичность подмены';
+    else if (mode==='custom'&&!customOk) hint='Укажите периодичность внесения';
+    else if (!entries.length) hint='Выберите хотя бы одно удобрение';
+    else hint='Введите дозу для всех удобрений';
+  }
+
+  const pickFert = id => {
+    if (entries.find(e=>e.id===id)) return;
+    const f = fertMap[id];
+    setEntries(prev=>[...prev,{id,name:f.name,brand:f.brand,dose:''}]);
+  };
+  const removeFert = id => { setEntries(prev=>prev.filter(e=>e.id!==id)); setResults(null); };
+  const updateDose = (id,val) => setEntries(prev=>prev.map(e=>e.id===id?{...e,dose:val}:e));
+
+  const calculate = () => {
+    const fp = getFP();
+    const totals = {};
+    ELK.forEach(k=>totals[k]=0);
+    entries.forEach(e => {
+      const dml = (parseFloat(e.dose)||0)/fp;
+      const f = fertMap[e.id];
+      ELK.forEach(k=>{ if(f[k]>0) totals[k]+=f[k]*dml/v; });
+    });
+    setResults(totals);
+    setTimeout(()=>document.getElementById('results-block')?.scrollIntoView({behavior:'smooth',block:'nearest'}),100);
+  };
+
+  const reset = () => { setVol('');setCvol('');setPeriod('');setMode('change');setCustomN('');setEntries([]);setResults(null); };
+
+  const fmt = v => {
+    if (!v) return '—';
+    if (v<0.001) return v.toFixed(4);
+    if (v<0.01) return v.toFixed(3);
+    if (v<0.1) return v.toFixed(2);
+    return v.toFixed(1);
+  };
+
+  const fp = getFP();
+  const doseHeader = colMode==='daily' ? 'Ежедневная доза, мл' : `Общая доза за ${fp} дн, мл`;
+  const modeLabel = {daily:'каждый день',change:`при подмене раз в ${p||7} дней`,custom:`раз в ${fp} дней`};
+  const active = results ? ELK.filter(k=>results[k]>0) : [];
+  const withChange = mode==='change' && (parseFloat(cvol)||0)>0;
+
+  return (
+    <div style={{maxWidth:600,margin:'0 auto',padding:'24px 16px 64px',display:'flex',flexDirection:'column',gap:12}}>
+
+      {/* Section 1 — Аквариум */}
+      <div style={card}>
+        <div style={secHdr}>
+          <div style={secBadge()}>1</div>
+          <div style={secTitle}>Аквариум</div>
+        </div>
+        <div style={secBody}>
+          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
+            <InputField label="Объём аквариума" unit="литров" placeholder="80" value={vol} onChange={setVol}/>
+            <InputField label="Объём подменной воды" unit="литров" placeholder="20" value={cvol} onChange={setCvol}/>
+          </div>
+        </div>
+      </div>
+
+      {/* Section 2 — Режим */}
+      <div style={card}>
+        <div style={secHdr}>
+          <div style={secBadge()}>2</div>
+          <div style={secTitle}>Режим</div>
+        </div>
+        <div style={secBody}>
+          <InputField label="Подмена воды раз в" unit="дней" placeholder="7" value={period} onChange={setPeriod}/>
+          <ModeSelector mode={mode} onMode={setMode} customN={customN} onCustomN={setCustomN}/>
+        </div>
+      </div>
+
+      {/* Section 3 — Удобрения */}
+      <div style={card}>
+        <div style={secHdr}>
+          <div style={secBadge()}>3</div>
+          <div style={secTitle}>Удобрения</div>
+        </div>
+        <div style={secBody}>
+          {entries.length > 0 && (
+            <>
+              <div style={{display:'flex',gap:4,marginBottom:2}}>
+                {['daily','total'].map(m=>(
+                  <button key={m} onClick={()=>setColMode(m)} style={{
+                    padding:'5px 12px',borderRadius:100,cursor:'pointer',fontSize:12,
+                    border:`1.5px solid ${colMode===m?'#A8E8F8':'#DDE5F0'}`,
+                    background:colMode===m?'#E0F6FC':'none',
+                    color:colMode===m?'#1A7A96':'#64748B',
+                    fontWeight:colMode===m?600:400,fontFamily:"'Inter',sans-serif",transition:'all .12s',
+                  }}>{m==='daily'?'Ежедневная доза':'Общая доза за период'}</button>
+                ))}
+              </div>
+              <table style={{width:'100%',borderCollapse:'collapse',border:'1.5px solid #DDE5F0',borderRadius:12,overflow:'hidden'}}>
+                <thead>
+                  <tr>
+                    <th style={{background:'#F5F8FC',padding:'9px 12px',fontSize:11,fontWeight:700,color:'#64748B',letterSpacing:'.05em',textAlign:'left',borderBottom:'1.5px solid #DDE5F0',fontFamily:"'Nobile',sans-serif"}}>Удобрение</th>
+                    <th style={{background:'#F5F8FC',padding:'9px 12px',fontSize:11,fontWeight:700,color:'#64748B',letterSpacing:'.05em',textAlign:'right',borderBottom:'1.5px solid #DDE5F0',fontFamily:"'Nobile',sans-serif"}}>{doseHeader}</th>
+                    <th style={{background:'#F5F8FC',borderBottom:'1.5px solid #DDE5F0',width:44}}></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {entries.map((e,i)=>(
+                    <tr key={e.id}>
+                      <td style={{padding:'11px 12px',fontSize:13,borderBottom:i<entries.length-1?'1px solid #EEF2F8':'none',verticalAlign:'middle'}}>
+                        <div style={{fontWeight:600,color:'#0F172A',fontSize:14,fontFamily:"'Inter',sans-serif"}}>{e.name}</div>
+                        <div style={{fontSize:11,color:'#94A3B8',marginTop:2,fontFamily:"'Inter',sans-serif"}}>{e.brand}</div>
+                      </td>
+                      <td style={{padding:'11px 12px',borderBottom:i<entries.length-1?'1px solid #EEF2F8':'none',verticalAlign:'middle'}}>
+                        <div style={{display:'flex',alignItems:'center',justifyContent:'flex-end',gap:6}}>
+                          <input type="number" min="0" step="0.1" placeholder="0" value={e.dose}
+                            onChange={ev=>updateDose(e.id,ev.target.value)}
+                            style={{width:72,padding:'7px 9px',fontSize:14,fontWeight:400,
+                              border:`1.5px solid ${e.dose?'#A8E8F8':'#DDE5F0'}`,
+                              borderRadius:9,background:e.dose?'#E0F6FC':'#FAFCFF',
+                              color:'#0F172A',textAlign:'right',fontFamily:"'Inter',sans-serif",outline:'none'}}
+                            onFocus={ev=>{ev.target.style.borderColor='#28B0D8';ev.target.style.boxShadow='0 0 0 3px rgba(40,176,216,.1)'}}
+                            onBlur={ev=>{ev.target.style.boxShadow='none';ev.target.style.borderColor=e.dose?'#A8E8F8':'#DDE5F0'}}
+                          />
+                          <span style={{fontSize:11,color:'#94A3B8',whiteSpace:'nowrap',fontFamily:"'Inter',sans-serif"}}>
+                            {colMode==='daily'?'мл/день':`мл/${fp}дн`}
+                          </span>
+                        </div>
+                      </td>
+                      <td style={{padding:'11px 12px',borderBottom:i<entries.length-1?'1px solid #EEF2F8':'none',width:44}}>
+                        <button onClick={()=>removeFert(e.id)} style={{
+                          background:'none',border:'1.5px solid #DDE5F0',borderRadius:8,
+                          cursor:'pointer',color:'#94A3B8',fontSize:13,padding:'5px 9px',
+                          fontFamily:"'Inter',sans-serif",transition:'all .12s',
+                        }}
+                          onMouseEnter={ev=>{ev.currentTarget.style.background='#F5F8FC';ev.currentTarget.style.color='#0F172A'}}
+                          onMouseLeave={ev=>{ev.currentTarget.style.background='none';ev.currentTarget.style.color='#94A3B8'}}
+                        >✕</button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </>
+          )}
+          <FertDropdown usedIds={entries.map(e=>e.id)} onPick={pickFert}/>
+        </div>
+      </div>
+
+      {/* CTA Button */}
+      <div style={{display:'flex',flexDirection:'column',gap:6}}>
+        <button disabled={!canCalc} onClick={calculate} style={{
+          width:'100%',padding:15,
+          background:canCalc?'linear-gradient(135deg,#28B0D8,#1A8FB2)':'#E2EAF4',
+          color:canCalc?'#fff':'#94A3B8',border:'none',borderRadius:13,
+          fontSize:16,fontWeight:700,fontFamily:"'Nobile',sans-serif",
+          cursor:canCalc?'pointer':'not-allowed',
+          boxShadow:canCalc?'0 4px 16px rgba(40,176,216,.35)':'none',
+          transition:'all .15s',letterSpacing:'.01em',
+        }}
+          onMouseEnter={e=>{if(canCalc){e.target.style.background='linear-gradient(135deg,#1A8FB2,#126E8A)';e.target.style.boxShadow='0 6px 20px rgba(40,176,216,.45)'}}}
+          onMouseLeave={e=>{if(canCalc){e.target.style.background='linear-gradient(135deg,#28B0D8,#1A8FB2)';e.target.style.boxShadow='0 4px 16px rgba(40,176,216,.35)'}}}
+        >Рассчитать</button>
+        <div style={{fontSize:11,color:'#94A3B8',textAlign:'center',minHeight:16,fontFamily:"'Inter',sans-serif"}}>{hint}</div>
+      </div>
+
+      {/* Results */}
+      {results && (
+        <div id="results-block" style={{...card,marginTop:4}}>
+          <div style={{
+            background:'linear-gradient(135deg,#E0F6FC 0%,#E8FAD8 100%)',
+            borderBottom:'1.5px solid #A8E8F8',padding:'14px 18px',
+            display:'flex',alignItems:'center',gap:10,borderRadius:'16px 16px 0 0',
+          }}>
+            <div style={{width:28,height:28,borderRadius:'50%',background:'linear-gradient(135deg,#45C136,#2E9422)',
+              display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,
+              boxShadow:'0 2px 8px rgba(69,193,54,.35)'}}>
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </div>
+            <div>
+              <div style={{fontSize:14,fontWeight:700,color:'#1A7A96',fontFamily:"'Nobile',sans-serif",letterSpacing:'-.01em'}}>Концентрация элементов в аквариуме</div>
+              <div style={{fontSize:11,color:'#28B0D8',marginTop:2,fontFamily:"'Inter',sans-serif"}}>
+                Аквариум {v} л · удобрения вносятся {modeLabel[mode]}
+              </div>
+            </div>
+          </div>
+          <div style={{overflowX:'auto'}}>
+            <table style={{width:'100%',borderCollapse:'collapse',minWidth:380}}>
+              <thead>
+                <tr>
+                  {['Элемент','Ежедневно',`За ${p||7} дн`,'Жёсткость'].concat(withChange?['Подмена']:[]).map((h,i)=>(
+                    <th key={h} style={{background:'#F5F8FC',padding:'9px 12px',fontSize:11,fontWeight:700,
+                      color:'#64748B',letterSpacing:'.05em',textAlign:i===0?'left':'right',
+                      borderBottom:'1.5px solid #DDE5F0',whiteSpace:'nowrap',fontFamily:"'Nobile',sans-serif"}}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {active.map((k,i)=>{
+                  const d=results[k],t=d*(p||7);
+                  const gh=['mg','ca'].includes(k)?`${(t*7.14).toFixed(2)} °dH`:'—';
+                  return (
+                    <tr key={k}>
+                      <td style={{padding:'11px 12px',borderBottom:i<active.length-1?'1px solid #EEF2F8':'none'}}>
+                        <div style={{fontSize:15,fontWeight:700,fontFamily:"'Nobile',sans-serif",color:'#0F172A'}}>{ELN[k]}</div>
+                        <div style={{fontSize:11,color:'#94A3B8',marginTop:2,fontFamily:"'Inter',sans-serif"}}>{ELF[k]}</div>
+                      </td>
+                      {[`+${fmt(d)} мг/л`,`+${fmt(t)} мг/л`,gh].concat(withChange?[`+${fmt(d*(p||7)*(parseFloat(cvol)/v))} мг/л`]:[]).map((val,j)=>(
+                        <td key={j} style={{padding:'11px 12px',fontSize:13,textAlign:'right',
+                          borderBottom:i<active.length-1?'1px solid #EEF2F8':'none',
+                          color:'#334155',fontFamily:"'Inter',sans-serif"}}>{val}</td>
+                      ))}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+          <div style={{padding:'13px 18px',borderTop:'1.5px solid #DDE5F0',display:'flex',gap:8}}>
+            <button onClick={()=>window.print()} style={{flex:1,padding:10,border:'1.5px solid #DDE5F0',borderRadius:10,
+              fontSize:13,color:'#64748B',background:'none',cursor:'pointer',fontFamily:"'Inter',sans-serif",
+              display:'flex',alignItems:'center',justifyContent:'center',gap:6,transition:'background .12s'}}
+              onMouseEnter={e=>e.currentTarget.style.background='#F5F8FC'}
+              onMouseLeave={e=>e.currentTarget.style.background='none'}>
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="2" y="7.5" width="9" height="4.5" rx="1" stroke="currentColor" strokeWidth="1"/><path d="M3.5 7.5V3h6v4.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/><rect x="4" y="1" width="5" height="2" rx=".5" stroke="currentColor" strokeWidth="1"/></svg>
+              Распечатать
+            </button>
+            <button onClick={()=>{
+              const rows = active.map(k=>`${ELN[k]} (${ELF[k]}): ежедневно +${fmt(results[k])} мг/л`).join('\n');
+              navigator.clipboard.writeText(`AquaCalc\nАквариум ${v} л\n\n${rows}`).then(()=>alert('Скопировано!'));
+            }} style={{flex:1,padding:10,border:'none',borderRadius:10,fontSize:13,color:'#fff',
+              background:'linear-gradient(135deg,#28B0D8,#1A8FB2)',cursor:'pointer',
+              fontFamily:"'Inter',sans-serif",fontWeight:600,boxShadow:'0 3px 10px rgba(40,176,216,.3)',transition:'all .15s'}}
+              onMouseEnter={e=>e.currentTarget.style.background='linear-gradient(135deg,#1A8FB2,#126E8A)'}
+              onMouseLeave={e=>e.currentTarget.style.background='linear-gradient(135deg,#28B0D8,#1A8FB2)'}>
+              Скопировать
+            </button>
+          </div>
+          <div onClick={reset} style={{fontSize:13,color:'#94A3B8',textAlign:'center',cursor:'pointer',
+            padding:12,fontFamily:"'Inter',sans-serif",transition:'color .15s'}}
+            onMouseEnter={e=>e.currentTarget.style.color='#334155'}
+            onMouseLeave={e=>e.currentTarget.style.color='#94A3B8'}>
+            ← Пересчитать
+          </div>
+        </div>
+      )}
+
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
