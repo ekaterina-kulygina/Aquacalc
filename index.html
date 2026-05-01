@@ -1,3 +1,4 @@
+<!--
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -205,5 +206,332 @@ function resetAll(){entries=[];document.querySelectorAll('.field input').forEach
 function copyResult(){const rows=document.querySelectorAll('#res-tbody tr');let t='AquaCalc\n\n'+document.getElementById('res-sub').textContent+'\n\n';rows.forEach(r=>{const c=r.querySelectorAll('td');t+=`${c[0].textContent.trim()}: ежедневно ${c[1].textContent} / за период ${c[2].textContent}\n`;});navigator.clipboard.writeText(t).then(()=>alert('Скопировано!')).catch(()=>{});}
 setMode('change');renderDD();chk();
 </script>
+</body>
+</html>#
+-->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AquaCalc — калькулятор удобрений для аквариума</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:'Nobile';src:url('fonts/Nobile-Regular.ttf') format('truetype');font-weight:400;font-style:normal}
+@font-face{font-family:'Nobile';src:url('fonts/Nobile-Medium.ttf') format('truetype');font-weight:500;font-style:normal}
+@font-face{font-family:'Nobile';src:url('fonts/Nobile-Bold.ttf') format('truetype');font-weight:700;font-style:normal}
+@font-face{font-family:'Nobile';src:url('fonts/Nobile-BoldItalic.ttf') format('truetype');font-weight:700;font-style:italic}
+@font-face{font-family:'Nobile';src:url('fonts/Nobile-MediumItalic.ttf') format('truetype');font-weight:500;font-style:italic}
+@font-face{font-family:'Nobile';src:url('fonts/Nobile-Italic.ttf') format('truetype');font-weight:400;font-style:italic}
+
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#28B0D8;--blue-dark:#1A8FB2;--blue-deep:#293852;
+  --blue2:#26D1FE;--green:#45C136;--green2:#7FDC19;
+  --violet:#FF69FF;--yellow:#FFCB21;
+  --bg:#F5F7FA;--surface:#fff;
+  --text:#0F172A;--muted:#64748B;--border:#DDE5F0;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+
+/* ── NAV ── */
+nav{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,0.06)}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:'Nobile',sans-serif;font-size:20px;font-weight:700;letter-spacing:-.02em;display:flex;align-items:center;gap:9px;text-decoration:none}
+.nav-logo-icon{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#28B0D8,#1A8FB2);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(40,176,216,0.4);flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{font-size:14px;color:var(--muted);text-decoration:none;font-weight:500;transition:color .15s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{padding:9px 20px;background:linear-gradient(135deg,#28B0D8,#1A8FB2);color:#fff;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;box-shadow:0 3px 10px rgba(40,176,216,0.35);transition:all .15s;font-family:'Nobile',sans-serif}
+.nav-cta:hover{background:linear-gradient(135deg,#1A8FB2,#126E8A);box-shadow:0 4px 14px rgba(40,176,216,0.45)}
+
+/* ── HERO ── */
+.hero{padding:0 24px;background:#F5F7FA}
+.hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;padding:80px 0}
+.hero-text .eyebrow{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);border-radius:100px;padding:5px 14px;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:24px;box-shadow:0 1px 4px rgba(0,0,0,0.05)}
+.eyebrow-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 6px rgba(69,193,54,0.6)}
+.hero-text h1{font-family:'Nobile',sans-serif;font-size:clamp(32px,3.5vw,54px);font-weight:700;line-height:1.12;letter-spacing:-.02em;margin-bottom:20px}
+.hero-text p{font-size:17px;color:var(--muted);margin-bottom:36px;line-height:1.7}
+.hero-buttons{display:flex;gap:12px;flex-wrap:wrap}
+.btn-primary{padding:14px 28px;background:linear-gradient(135deg,#28B0D8,#1A8FB2);color:#fff;border-radius:13px;font-size:16px;font-weight:700;font-family:'Nobile',sans-serif;text-decoration:none;box-shadow:0 4px 16px rgba(40,176,216,0.4);transition:all .15s;display:inline-block}
+.btn-primary:hover{background:linear-gradient(135deg,#1A8FB2,#126E8A);box-shadow:0 6px 20px rgba(40,176,216,0.5);transform:translateY(-1px)}
+.btn-ghost{padding:14px 28px;border:1.5px solid var(--border);background:#fff;color:var(--text);border-radius:13px;font-size:16px;font-weight:600;font-family:'Inter',sans-serif;text-decoration:none;transition:all .15s;display:inline-block}
+.btn-ghost:hover{border-color:var(--blue);color:var(--blue);background:#EAF6FC}
+
+/* Calculator mockup */
+.hero-visual{background:linear-gradient(135deg,#293852 0%,#1A2640 100%);border-radius:20px;padding:24px;box-shadow:0 16px 48px rgba(41,56,82,0.25)}
+.mock-topbar{background:rgba(255,255,255,0.08);border-radius:10px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.mock-logo{font-family:'Nobile',sans-serif;font-size:14px;font-weight:700;color:#fff;display:flex;align-items:center;gap:6px}
+.mock-logo-icon{width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,#28B0D8,#1A8FB2);display:flex;align-items:center;justify-content:center}
+.mock-pill{font-size:10px;color:#26D1FE;background:rgba(38,209,254,0.15);padding:3px 8px;border-radius:100px;border:1px solid rgba(38,209,254,0.3);font-weight:600}
+.mock-section{background:rgba(255,255,255,0.06);border-radius:10px;padding:12px 14px;margin-bottom:10px}
+.mock-sec-hdr{display:flex;align-items:center;gap:6px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.mock-badge{width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#28B0D8,#1A8FB2);color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:'Nobile',sans-serif}
+.mock-sec-title{font-size:9px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.08em;font-family:'Nobile',sans-serif}
+.mock-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mock-field{display:flex;flex-direction:column;gap:3px}
+.mock-flbl{font-size:9px;color:rgba(255,255,255,0.4);font-family:'Inter',sans-serif}
+.mock-inp{background:rgba(255,255,255,0.08);border:1px solid rgba(40,176,216,0.3);border-radius:7px;padding:7px 10px;font-size:13px;font-weight:500;color:#fff;font-family:'Inter',sans-serif}
+.mock-inp.filled{background:rgba(40,176,216,0.15);border-color:rgba(40,176,216,0.5)}
+.mock-fert-row{display:flex;justify-content:space-between;align-items:center}
+.mock-fert-name{font-size:12px;font-weight:600;color:#fff;font-family:'Inter',sans-serif}
+.mock-fert-brand{font-size:10px;color:rgba(255,255,255,0.4)}
+.mock-btn{width:100%;padding:11px;background:linear-gradient(135deg,#28B0D8,#1A8FB2);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;font-family:'Nobile',sans-serif;text-align:center;box-shadow:0 3px 10px rgba(40,176,216,0.4);margin-top:4px;cursor:pointer}
+
+/* ── BRANDS STRIP ── */
+.brands{background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:20px 24px}
+.brands-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+.brands-label{font-size:12px;color:var(--muted);font-weight:500;margin-right:8px}
+.brand-chip{padding:6px 14px;border-radius:100px;background:var(--bg);border:1px solid var(--border);font-size:13px;font-weight:500;color:var(--muted)}
+
+/* ── FEATURES ── */
+.section{padding:80px 24px;max-width:1100px;margin:0 auto}
+.section-label{font-size:12px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.1em;font-family:'Nobile',sans-serif;margin-bottom:12px;text-align:center}
+.section-title{font-family:'Nobile',sans-serif;font-size:clamp(26px,3vw,40px);font-weight:700;line-height:1.15;letter-spacing:-.02em;text-align:center;margin-bottom:14px}
+.section-sub{font-size:16px;color:var(--muted);text-align:center;max-width:540px;margin:0 auto 52px}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.feature-card{background:#fff;border-radius:16px;padding:28px;border:1px solid var(--border);box-shadow:0 1px 4px rgba(0,0,0,0.05);transition:box-shadow .2s,transform .2s}
+.feature-card:hover{box-shadow:0 8px 28px rgba(40,176,216,0.12);transform:translateY(-2px)}
+.feature-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:22px}
+.feature-card h3{font-family:'Nobile',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;letter-spacing:-.01em}
+.feature-card p{font-size:14px;color:var(--muted);line-height:1.6}
+
+/* ── HOW IT WORKS ── */
+.how-bg{background:linear-gradient(135deg,#293852 0%,#1A2640 100%);padding:80px 24px}
+.how-inner{max-width:1100px;margin:0 auto}
+.how-inner .section-label{color:#26D1FE}
+.how-inner .section-title{color:#fff}
+.how-inner .section-sub{color:rgba(255,255,255,0.6)}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px}
+.step{text-align:center}
+.step-num{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#28B0D8,#1A8FB2);color:#fff;font-family:'Nobile',sans-serif;font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 4px 14px rgba(40,176,216,0.4)}
+.step h3{font-family:'Nobile',sans-serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:8px}
+.step p{font-size:14px;color:rgba(255,255,255,0.6);line-height:1.6}
+
+/* ── FERTILIZERS ── */
+.ferts-bg{background:#fff;padding:80px 24px}
+.ferts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.fert-chip{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.fert-brand{font-size:11px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.06em;font-family:'Nobile',sans-serif;margin-bottom:4px}
+.fert-name{font-size:13px;font-weight:500;color:var(--text)}
+
+/* ── CTA BANNER ── */
+.cta-banner{background:linear-gradient(135deg,#28B0D8 0%,#1A8FB2 60%,#293852 100%);padding:72px 24px;text-align:center}
+.cta-banner h2{font-family:'Nobile',sans-serif;font-size:clamp(26px,3vw,42px);font-weight:700;color:#fff;margin-bottom:16px;letter-spacing:-.02em}
+.cta-banner p{font-size:17px;color:rgba(255,255,255,0.75);margin-bottom:36px;max-width:480px;margin-left:auto;margin-right:auto}
+.btn-white{padding:15px 36px;background:#fff;color:var(--blue-dark);border-radius:13px;font-size:16px;font-weight:700;font-family:'Nobile',sans-serif;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,0.2);transition:all .15s;display:inline-block}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(0,0,0,0.25)}
+
+/* ── FOOTER ── */
+footer{background:var(--blue-deep);padding:40px 24px}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.footer-logo{font-family:'Nobile',sans-serif;font-size:18px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px}
+.footer-logo-icon{width:28px;height:28px;border-radius:7px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center}
+.footer-links{display:flex;gap:20px}
+.footer-links a{font-size:13px;color:rgba(255,255,255,0.5);text-decoration:none;transition:color .15s}
+.footer-links a:hover{color:#fff}
+.footer-copy{font-size:12px;color:rgba(255,255,255,0.35)}
+
+@media(max-width:768px){
+  .hero-inner{grid-template-columns:1fr}
+  .hero-visual{display:none}
+  .nav-links{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon"><svg width="16" height="16" viewBox="0 0 15 15" fill="none"><path d="M3 12V5.5l4.5-4L12 5.5V12M5.5 12V9h4v3" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <span style="color:#0F172A">Aqua<span style="color:#28B0D8">Calc</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="#features">Возможности</a>
+      <a href="#how">Как работает</a>
+      <a href="#fertilizers">Удобрения</a>
+    </div>
+    <a href="register.html" class="nav-cta">Рассчитать</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="eyebrow"><span class="eyebrow-dot"></span>Точный расчёт за 30 секунд</div>
+      <h1>Калькулятор удобрений для <span style="color:#28B0D8">аквариума</span></h1>
+      <p>Рассчитайте точную дозировку макро- и микроудобрений — с учётом объёма, режима подмены и совместимости составов.</p>
+      <div class="hero-buttons">
+        <a href="register.html" class="btn-primary">Начать бесплатно</a>
+        <a href="#how" class="btn-ghost">Как работает</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="mock-topbar">
+        <div class="mock-logo">
+          <div class="mock-logo-icon"><svg width="11" height="11" viewBox="0 0 15 15" fill="none"><path d="M3 12V5.5l4.5-4L12 5.5V12M5.5 12V9h4v3" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          Aqua<span style="color:#26D1FE">Calc</span>
+        </div>
+        <div class="mock-pill">Доступ активен</div>
+      </div>
+      <div class="mock-section">
+        <div class="mock-sec-hdr"><div class="mock-badge">1</div><div class="mock-sec-title">Аквариум</div></div>
+        <div class="mock-row">
+          <div class="mock-field"><div class="mock-flbl">Объём аквариума</div><div class="mock-inp filled">80</div></div>
+          <div class="mock-field"><div class="mock-flbl">Объём подмены</div><div class="mock-inp filled">20</div></div>
+        </div>
+      </div>
+      <div class="mock-section">
+        <div class="mock-sec-hdr"><div class="mock-badge">3</div><div class="mock-sec-title">Удобрения</div></div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div class="mock-fert-row">
+            <div><div class="mock-fert-name">Aquayer Macro</div><div class="mock-fert-brand">Aquayer</div></div>
+            <div class="mock-inp filled" style="width:58px;text-align:right;font-size:13px">5</div>
+          </div>
+          <div class="mock-fert-row">
+            <div><div class="mock-fert-name">Aquayer Micro</div><div class="mock-fert-brand">Aquayer</div></div>
+            <div class="mock-inp filled" style="width:58px;text-align:right;font-size:13px">3</div>
+          </div>
+        </div>
+      </div>
+      <div class="mock-btn">Рассчитать</div>
+    </div>
+  </div>
+</div>
+
+<!-- BRANDS -->
+<div class="brands">
+  <div class="brands-inner">
+    <span class="brands-label">Поддерживаемые бренды:</span>
+    <span class="brand-chip">Aquayer</span>
+    <span class="brand-chip">Dennerle</span>
+    <span class="brand-chip">Tropica</span>
+    <span class="brand-chip">Sera</span>
+    <span class="brand-chip">JBL</span>
+    <span class="brand-chip">Seachem</span>
+    <span class="brand-chip">Aqua Botanic</span>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div id="features">
+  <div class="section">
+    <div class="section-label">Возможности</div>
+    <div class="section-title">Всё для точного ухода<br>за растительным аквариумом</div>
+    <div class="section-sub">Никаких таблиц вручную — просто введите данные и получите готовый расчёт.</div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#E0F6FC">💧</div>
+        <h3>Учёт объёма и подмен</h3>
+        <p>Задайте объём аквариума и частоту подмены воды — калькулятор автоматически скорректирует дозировку.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#E8FAD8">🌿</div>
+        <h3>База из 30+ препаратов</h3>
+        <p>Aquayer, Dennerle, Tropica, Sera, JBL, Seachem, Aqua Botanic — все популярные серии уже внесены.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#FDE8FD">⚗️</div>
+        <h3>8 элементов в расчёте</h3>
+        <p>NO₃, PO₄, K, Fe, Mn, Mg, Ca, SO₄ — полный профиль питательных элементов для ваших растений.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#FFF3C2">🔄</div>
+        <h3>Три режима внесения</h3>
+        <p>Каждый день, вместе с подменой воды или в произвольные дни — выбирайте удобный режим.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#E0F6FC">📊</div>
+        <h3>Жёсткость воды</h3>
+        <p>Автоматический перевод концентрации Mg и Ca в градусы жёсткости °dH.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#E8FAD8">📋</div>
+        <h3>Экспорт результатов</h3>
+        <p>Скопируйте или распечатайте готовый расчёт — удобно для записей и напоминаний.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div id="how" class="how-bg">
+  <div class="how-inner">
+    <div class="section-label">Как работает</div>
+    <div class="section-title" style="margin-bottom:14px">Три шага до готового расчёта</div>
+    <div class="section-sub" style="margin-bottom:52px">Не нужно быть химиком — просто введите данные своего аквариума.</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Укажите аквариум</h3>
+        <p>Введите объём аквариума и объём подменной воды в литрах.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Выберите удобрения</h3>
+        <p>Добавьте препараты из базы и введите дозу на один раз.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Получите расчёт</h3>
+        <p>Мгновенная таблица с концентрацией каждого элемента — ежедневно и за период.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FERTILIZERS -->
+<div id="fertilizers" class="ferts-bg">
+  <div class="section" style="padding-top:0;padding-bottom:0">
+    <div class="section-label">База удобрений</div>
+    <div class="section-title">Поддерживаемые препараты</div>
+    <div class="section-sub">Регулярно пополняется. Не нашли свой бренд? Можно добавить вручную.</div>
+    <div class="ferts-grid">
+      <div class="fert-chip"><div class="fert-brand">Aquayer</div><div class="fert-name">Macro</div></div>
+      <div class="fert-chip"><div class="fert-brand">Aquayer</div><div class="fert-name">Micro</div></div>
+      <div class="fert-chip"><div class="fert-brand">Aquayer</div><div class="fert-name">Калий</div></div>
+      <div class="fert-chip"><div class="fert-brand">Aquayer</div><div class="fert-name">Железо</div></div>
+      <div class="fert-chip"><div class="fert-brand">Aquayer</div><div class="fert-name">GH+</div></div>
+      <div class="fert-chip"><div class="fert-brand">Dennerle</div><div class="fert-name">Plant Care Pro</div></div>
+      <div class="fert-chip"><div class="fert-brand">Dennerle</div><div class="fert-name">Plant Care N</div></div>
+      <div class="fert-chip"><div class="fert-brand">Dennerle</div><div class="fert-name">Plant Care K</div></div>
+      <div class="fert-chip"><div class="fert-brand">Tropica</div><div class="fert-name">Premium Complete</div></div>
+      <div class="fert-chip"><div class="fert-brand">Tropica</div><div class="fert-name">Specialised</div></div>
+      <div class="fert-chip"><div class="fert-brand">Sera</div><div class="fert-name">Florena Macro</div></div>
+      <div class="fert-chip"><div class="fert-brand">Sera</div><div class="fert-name">Florena Micro</div></div>
+      <div class="fert-chip"><div class="fert-brand">JBL</div><div class="fert-name">ProScape Macro</div></div>
+      <div class="fert-chip"><div class="fert-brand">JBL</div><div class="fert-name">ProScape Fe Micro</div></div>
+      <div class="fert-chip"><div class="fert-brand">Seachem</div><div class="fert-name">Flourish</div></div>
+      <div class="fert-chip"><div class="fert-brand">Seachem</div><div class="fert-name">Flourish Iron</div></div>
+      <div class="fert-chip"><div class="fert-brand">Aqua Botanic</div><div class="fert-name">Macro</div></div>
+      <div class="fert-chip"><div class="fert-brand">Aqua Botanic</div><div class="fert-name">Micro</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA BANNER -->
+<div class="cta-banner">
+  <h2>Попробуйте AquaCalc сегодня</h2>
+  <p>Рассчитывайте дозировки удобрений для своего аквариума по уникальным формулам быстро и без ошибок</p>
+  <a href="register.html" class="btn-white">Начать сегодня →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <div class="footer-logo-icon"><svg width="14" height="14" viewBox="0 0 15 15" fill="none"><path d="M3 12V5.5l4.5-4L12 5.5V12M5.5 12V9h4v3" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      Aqua<span style="color:#26D1FE">Calc</span>
+    </div>
+    <div class="footer-links">
+      <a href="#">Политика конфиденциальности</a>
+      <a href="#">Поддержка</a>
+    </div>
+    <div class="footer-copy">© 2026 AquaCalc</div>
+  </div>
+</footer>
+
 </body>
 </html>
