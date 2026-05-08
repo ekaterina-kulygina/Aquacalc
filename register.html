@@ -3,16 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AquaCalc — калькулятор удобрений для аквариума</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<title>AquaCalc — Регистрация</title>
+<link href="" rel="stylesheet">
 <style>
-@font-face{font-family:'Nobile';src:url('fonts/Nobile-Regular.ttf') format('truetype');font-weight:400;font-style:normal}
-@font-face{font-family:'Nobile';src:url('fonts/Nobile-Medium.ttf') format('truetype');font-weight:500;font-style:normal}
-@font-face{font-family:'Nobile';src:url('fonts/Nobile-Bold.ttf') format('truetype');font-weight:700;font-style:normal}
-@font-face{font-family:'Nobile';src:url('fonts/Nobile-BoldItalic.ttf') format('truetype');font-weight:700;font-style:italic}
-@font-face{font-family:'Nobile';src:url('fonts/Nobile-MediumItalic.ttf') format('truetype');font-weight:500;font-style:italic}
-@font-face{font-family:'Nobile';src:url('fonts/Nobile-Italic.ttf') format('truetype');font-weight:400;font-style:italic}
-
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --blue:#28B0D8;--blue-dark:#1A8FB2;--blue-deep:#293852;
@@ -21,306 +14,297 @@
   --bg:#F5F7FA;--surface:#fff;
   --text:#0F172A;--muted:#64748B;--border:#DDE5F0;
 }
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 
 /* ── NAV ── */
-nav{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,0.06)}
-.nav-inner{max-width:1100px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{font-family:'Nobile',sans-serif;font-size:20px;font-weight:700;letter-spacing:-.02em;display:flex;align-items:center;gap:9px;text-decoration:none}
-.nav-logo-icon{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#28B0D8,#1A8FB2);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(40,176,216,0.4);flex-shrink:0}
-.nav-links{display:flex;align-items:center;gap:28px}
-.nav-links a{font-size:14px;color:var(--muted);text-decoration:none;font-weight:500;transition:color .15s}
-.nav-links a:hover{color:var(--text)}
-.nav-cta{padding:9px 20px;background:linear-gradient(135deg,#28B0D8,#1A8FB2);color:#fff;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;box-shadow:0 3px 10px rgba(40,176,216,0.35);transition:all .15s;font-family:'Nobile',sans-serif}
-.nav-cta:hover{background:linear-gradient(135deg,#1A8FB2,#126E8A);box-shadow:0 4px 14px rgba(40,176,216,0.45)}
+nav{background:#fff;border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:'Nobile',sans-serif;font-size:18px;font-weight:700;letter-spacing:-.02em;display:flex;align-items:center;gap:8px;text-decoration:none}
+.nav-logo-icon{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#28B0D8,#1A8FB2);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(40,176,216,0.35);flex-shrink:0}
+.nav-back{font-size:13px;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:5px;transition:color .15s}
+.nav-back:hover{color:var(--text)}
 
-/* ── HERO ── */
-.hero{padding:0 24px;background:#F5F7FA}
-.hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;padding:80px 0}
-.hero-text .eyebrow{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);border-radius:100px;padding:5px 14px;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:24px;box-shadow:0 1px 4px rgba(0,0,0,0.05)}
-.eyebrow-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 6px rgba(69,193,54,0.6)}
-.hero-text h1{font-family:'Nobile',sans-serif;font-size:clamp(32px,3.5vw,54px);font-weight:700;line-height:1.12;letter-spacing:-.02em;margin-bottom:20px}
-.hero-text p{font-size:17px;color:var(--muted);margin-bottom:36px;line-height:1.7}
-.hero-buttons{display:flex;gap:12px;flex-wrap:wrap}
-.btn-primary{padding:14px 28px;background:linear-gradient(135deg,#28B0D8,#1A8FB2);color:#fff;border-radius:13px;font-size:16px;font-weight:700;font-family:'Nobile',sans-serif;text-decoration:none;box-shadow:0 4px 16px rgba(40,176,216,0.4);transition:all .15s;display:inline-block}
-.btn-primary:hover{background:linear-gradient(135deg,#1A8FB2,#126E8A);box-shadow:0 6px 20px rgba(40,176,216,0.5);transform:translateY(-1px)}
-.btn-ghost{padding:14px 28px;border:1.5px solid var(--border);background:#fff;color:var(--text);border-radius:13px;font-size:16px;font-weight:600;font-family:'Inter',sans-serif;text-decoration:none;transition:all .15s;display:inline-block}
-.btn-ghost:hover{border-color:var(--blue);color:var(--blue);background:#EAF6FC}
+/* ── VARIANT TOGGLE ── */
+.variant-bar{background:#fff;border-bottom:1px solid var(--border);padding:10px 24px;display:flex;align-items:center;gap:8px;justify-content:center}
+.vbtn{padding:6px 16px;border-radius:100px;font-size:13px;font-weight:500;cursor:pointer;border:1.5px solid var(--border);background:none;color:var(--muted);font-family:'Inter',sans-serif;transition:all .12s}
+.vbtn.active{background:#E0F6FC;border-color:#A8E8F8;color:#1A7A96;font-weight:600}
 
-/* Calculator mockup */
-.hero-visual{background:linear-gradient(135deg,#293852 0%,#1A2640 100%);border-radius:20px;padding:24px;box-shadow:0 16px 48px rgba(41,56,82,0.25)}
-.mock-topbar{background:rgba(255,255,255,0.08);border-radius:10px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.mock-logo{font-family:'Nobile',sans-serif;font-size:14px;font-weight:700;color:#fff;display:flex;align-items:center;gap:6px}
-.mock-logo-icon{width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,#28B0D8,#1A8FB2);display:flex;align-items:center;justify-content:center}
-.mock-pill{font-size:10px;color:#26D1FE;background:rgba(38,209,254,0.15);padding:3px 8px;border-radius:100px;border:1px solid rgba(38,209,254,0.3);font-weight:600}
-.mock-section{background:rgba(255,255,255,0.06);border-radius:10px;padding:12px 14px;margin-bottom:10px}
-.mock-sec-hdr{display:flex;align-items:center;gap:6px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.08)}
-.mock-badge{width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#28B0D8,#1A8FB2);color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:'Nobile',sans-serif}
-.mock-sec-title{font-size:9px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.08em;font-family:'Nobile',sans-serif}
-.mock-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.mock-field{display:flex;flex-direction:column;gap:3px}
-.mock-flbl{font-size:9px;color:rgba(255,255,255,0.4);font-family:'Inter',sans-serif}
-.mock-inp{background:rgba(255,255,255,0.08);border:1px solid rgba(40,176,216,0.3);border-radius:7px;padding:7px 10px;font-size:13px;font-weight:500;color:#fff;font-family:'Inter',sans-serif}
-.mock-inp.filled{background:rgba(40,176,216,0.15);border-color:rgba(40,176,216,0.5)}
-.mock-fert-row{display:flex;justify-content:space-between;align-items:center}
-.mock-fert-name{font-size:12px;font-weight:600;color:#fff;font-family:'Inter',sans-serif}
-.mock-fert-brand{font-size:10px;color:rgba(255,255,255,0.4)}
-.mock-btn{width:100%;padding:11px;background:linear-gradient(135deg,#28B0D8,#1A8FB2);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;font-family:'Nobile',sans-serif;text-align:center;box-shadow:0 3px 10px rgba(40,176,216,0.4);margin-top:4px;cursor:pointer}
+/* ── LAYOUT ── */
+.page{min-height:calc(100vh - 60px);display:flex;align-items:stretch}
+.left-panel{width:420px;flex-shrink:0;background:linear-gradient(160deg,#293852 0%,#1A2640 100%);padding:56px 48px;display:flex;flex-direction:column;justify-content:space-between}
+.right-panel{flex:1;padding:48px;display:flex;align-items:center;justify-content:center;background:var(--bg)}
 
-/* ── BRANDS STRIP ── */
-.brands{background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:20px 24px}
-.brands-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
-.brands-label{font-size:12px;color:var(--muted);font-weight:500;margin-right:8px}
-.brand-chip{padding:6px 14px;border-radius:100px;background:var(--bg);border:1px solid var(--border);font-size:13px;font-weight:500;color:var(--muted)}
+/* ── LEFT PANEL ── */
+.lp-title{font-family:'Nobile',sans-serif;font-size:26px;font-weight:700;color:#fff;line-height:1.2;margin-bottom:12px;letter-spacing:-.02em}
+.lp-sub{font-size:15px;color:rgba(255,255,255,0.6);line-height:1.6;margin-bottom:40px}
+.plan-card{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:24px;margin-bottom:16px}
+.plan-name{font-family:'Nobile',sans-serif;font-size:14px;font-weight:700;color:var(--blue2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.plan-price{font-family:'Nobile',sans-serif;font-size:36px;font-weight:700;color:#fff;letter-spacing:-.02em;line-height:1}
+.plan-price sup{font-size:18px;vertical-align:top;margin-top:4px;display:inline-block}
+.plan-price .period{font-size:14px;font-weight:400;color:rgba(255,255,255,0.5);margin-left:4px}
+.plan-desc{font-size:13px;color:rgba(255,255,255,0.5);margin-top:6px;margin-bottom:16px}
+.plan-features{display:flex;flex-direction:column;gap:8px}
+.plan-feat{display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.8)}
+.plan-feat-icon{width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#45C136,#2E9422);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.plan-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,203,33,0.15);border:1px solid rgba(255,203,33,0.3);border-radius:100px;padding:4px 12px;font-size:12px;font-weight:600;color:var(--yellow);margin-bottom:16px}
+.security-note{display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,0.4);margin-top:auto}
 
-/* ── FEATURES ── */
-.section{padding:80px 24px;max-width:1100px;margin:0 auto}
-.section-label{font-size:12px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.1em;font-family:'Nobile',sans-serif;margin-bottom:12px;text-align:center}
-.section-title{font-family:'Nobile',sans-serif;font-size:clamp(26px,3vw,40px);font-weight:700;line-height:1.15;letter-spacing:-.02em;text-align:center;margin-bottom:14px}
-.section-sub{font-size:16px;color:var(--muted);text-align:center;max-width:540px;margin:0 auto 52px}
-.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
-.feature-card{background:#fff;border-radius:16px;padding:28px;border:1px solid var(--border);box-shadow:0 1px 4px rgba(0,0,0,0.05);transition:box-shadow .2s,transform .2s}
-.feature-card:hover{box-shadow:0 8px 28px rgba(40,176,216,0.12);transform:translateY(-2px)}
-.feature-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:22px}
-.feature-card h3{font-family:'Nobile',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;letter-spacing:-.01em}
-.feature-card p{font-size:14px;color:var(--muted);line-height:1.6}
+/* ── FORM (right panel) ── */
+.form-wrap{width:100%;max-width:440px}
+.form-tabs{display:flex;gap:4px;background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:4px;margin-bottom:32px}
+.tab{flex:1;padding:9px;border-radius:9px;font-size:14px;font-weight:600;font-family:'Nobile',sans-serif;cursor:pointer;border:none;background:none;color:var(--muted);transition:all .15s;text-align:center}
+.tab.active{background:linear-gradient(135deg,#28B0D8,#1A8FB2);color:#fff;box-shadow:0 2px 8px rgba(40,176,216,0.3)}
+.form-title{font-family:'Nobile',sans-serif;font-size:24px;font-weight:700;margin-bottom:6px;letter-spacing:-.02em}
+.form-sub{font-size:14px;color:var(--muted);margin-bottom:28px}
+.field{display:flex;flex-direction:column;gap:5px;margin-bottom:16px}
+.flbl{font-size:13px;font-weight:500;color:var(--text)}
+.finput{padding:11px 14px;font-size:14px;border:1.5px solid var(--border);border-radius:10px;background:#fff;color:var(--text);font-family:'Inter',sans-serif;outline:none;transition:all .15s;width:100%}
+.finput:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(40,176,216,0.12)}
+.finput::placeholder{color:#B0BCC8}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn-submit{width:100%;padding:14px;background:linear-gradient(135deg,#28B0D8,#1A8FB2);color:#fff;border:none;border-radius:13px;font-size:16px;font-weight:700;font-family:'Nobile',sans-serif;cursor:pointer;box-shadow:0 4px 14px rgba(40,176,216,0.35);transition:all .15s;margin-top:8px}
+.btn-submit:hover{background:linear-gradient(135deg,#1A8FB2,#126E8A);box-shadow:0 6px 20px rgba(40,176,216,0.45);transform:translateY(-1px)}
+.divider{display:flex;align-items:center;gap:12px;margin:20px 0}
+.divider-line{flex:1;height:1px;background:var(--border)}
+.divider-text{font-size:12px;color:var(--muted);white-space:nowrap}
+.social-btn{width:100%;padding:11px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-weight:500;background:#fff;color:var(--text);cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .15s}
+.social-btn:hover{border-color:var(--blue);background:#EAF6FC}
+.form-footer{font-size:12px;color:var(--muted);text-align:center;margin-top:20px;line-height:1.6}
+.form-footer a{color:var(--blue);text-decoration:none;font-weight:500}
 
-/* ── HOW IT WORKS ── */
-.how-bg{background:linear-gradient(135deg,#293852 0%,#1A2640 100%);padding:80px 24px}
-.how-inner{max-width:1100px;margin:0 auto}
-.how-inner .section-label{color:#26D1FE}
-.how-inner .section-title{color:#fff}
-.how-inner .section-sub{color:rgba(255,255,255,0.6)}
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px}
-.step{text-align:center}
-.step-num{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#28B0D8,#1A8FB2);color:#fff;font-family:'Nobile',sans-serif;font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 4px 14px rgba(40,176,216,0.4)}
-.step h3{font-family:'Nobile',sans-serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:8px}
-.step p{font-size:14px;color:rgba(255,255,255,0.6);line-height:1.6}
+/* payment extras */
+.card-input-wrap{position:relative}
+.card-icons{position:absolute;right:12px;top:50%;transform:translateY(-50%);display:flex;gap:4px}
+.card-icon{width:32px;height:20px;border-radius:4px;background:#E2E8F0;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#64748B}
+.plan-summary{background:linear-gradient(135deg,#EAF6FC,#E8FAD8);border:1.5px solid #A8E8F8;border-radius:14px;padding:18px 20px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between}
+.ps-label{font-size:13px;color:var(--muted)}
+.ps-name{font-family:'Nobile',sans-serif;font-size:15px;font-weight:700;color:var(--text)}
+.ps-price{font-family:'Nobile',sans-serif;font-size:22px;font-weight:700;color:var(--blue-dark)}
+.secure-badges{display:flex;gap:8px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.secure-badge{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)}
 
-/* ── FERTILIZERS ── */
-.ferts-bg{background:#fff;padding:80px 24px}
-.ferts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
-.fert-chip{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
-.fert-brand{font-size:11px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.06em;font-family:'Nobile',sans-serif;margin-bottom:4px}
-.fert-name{font-size:13px;font-weight:500;color:var(--text)}
-
-/* ── CTA BANNER ── */
-.cta-banner{background:linear-gradient(135deg,#28B0D8 0%,#1A8FB2 60%,#293852 100%);padding:72px 24px;text-align:center}
-.cta-banner h2{font-family:'Nobile',sans-serif;font-size:clamp(26px,3vw,42px);font-weight:700;color:#fff;margin-bottom:16px;letter-spacing:-.02em}
-.cta-banner p{font-size:17px;color:rgba(255,255,255,0.75);margin-bottom:36px;max-width:480px;margin-left:auto;margin-right:auto}
-.btn-white{padding:15px 36px;background:#fff;color:var(--blue-dark);border-radius:13px;font-size:16px;font-weight:700;font-family:'Nobile',sans-serif;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,0.2);transition:all .15s;display:inline-block}
-.btn-white:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(0,0,0,0.25)}
-
-/* ── FOOTER ── */
-footer{background:var(--blue-deep);padding:40px 24px}
-.footer-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
-.footer-logo{font-family:'Nobile',sans-serif;font-size:18px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px}
-.footer-logo-icon{width:28px;height:28px;border-radius:7px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center}
-.footer-links{display:flex;gap:20px}
-.footer-links a{font-size:13px;color:rgba(255,255,255,0.5);text-decoration:none;transition:color .15s}
-.footer-links a:hover{color:#fff}
-.footer-copy{font-size:12px;color:rgba(255,255,255,0.35)}
+/* ── VARIANT B (centered) ── */
+.page-b{display:none;min-height:calc(100vh - 60px);background:var(--bg);align-items:flex-start;justify-content:center;padding:48px 24px}
+.page-b-inner{width:100%;max-width:900px;display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+.mini-left{background:linear-gradient(160deg,#293852 0%,#1A2640 100%);border-radius:20px;padding:32px}
+.mini-right{background:#fff;border-radius:20px;border:1.5px solid var(--border);padding:32px;box-shadow:0 2px 12px rgba(0,0,0,0.06)}
 
 @media(max-width:768px){
-  .hero-inner{grid-template-columns:1fr}
-  .hero-visual{display:none}
-  .nav-links{display:none}
+  .page{flex-direction:column}
+  .left-panel{width:100%;padding:32px 24px}
+  .right-panel{padding:32px 24px}
+  .page-b-inner{grid-template-columns:1fr}
 }
+</style>
+<style>
+@font-face{font-family:'Nobile';src:url('fonts/Nobile-Regular.ttf') format('truetype');font-weight:400;font-style:normal}
+@font-face{font-family:'Nobile';src:url('fonts/Nobile-Medium.ttf') format('truetype');font-weight:500;font-style:normal}
+@font-face{font-family:'Nobile';src:url('fonts/Nobile-Bold.ttf') format('truetype');font-weight:700;font-style:normal}
+@font-face{font-family:'Nobile';src:url('fonts/Nobile-BoldItalic.ttf') format('truetype');font-weight:700;font-style:italic}
+@font-face{font-family:'Nobile';src:url('fonts/Nobile-MediumItalic.ttf') format('truetype');font-weight:500;font-style:italic}
+@font-face{font-family:'Nobile';src:url('fonts/Nobile-Italic.ttf') format('truetype');font-weight:400;font-style:italic}
 </style>
 </head>
 <body>
 
+<div class="variant-bar">
+  <span style="font-size:12px;color:var(--muted);font-weight:500;margin-right:4px">Вариант:</span>
+  <button class="vbtn active" onclick="showVariant('a')">A — Split layout</button>
+  <button class="vbtn" onclick="showVariant('b')">B — Карточки</button>
+</div>
+
 <nav>
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo">
-      <div class="nav-logo-icon"><svg width="16" height="16" viewBox="0 0 15 15" fill="none"><path d="M3 12V5.5l4.5-4L12 5.5V12M5.5 12V9h4v3" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <span style="color:#0F172A">Aqua<span style="color:#28B0D8">Calc</span></span>
-    </a>
-    <div class="nav-links">
-      <a href="#features">Возможности</a>
-      <a href="#how">Как работает</a>
-      <a href="#fertilizers">Удобрения</a>
-    </div>
-    <a href="register.html" class="nav-cta">Рассчитать</a>
-  </div>
+  <a href="Landing Page.html" class="nav-logo">
+    <div class="nav-logo-icon"><svg width="13" height="13" viewBox="0 0 15 15" fill="none"><path d="M3 12V5.5l4.5-4L12 5.5V12M5.5 12V9h4v3" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <span style="color:#0F172A">Aqua<span style="color:#28B0D8">Calc</span></span>
+  </a>
+  <a href="Landing Page.html" class="nav-back">← Вернуться на главную</a>
 </nav>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-inner">
-    <div class="hero-text">
-      <div class="eyebrow"><span class="eyebrow-dot"></span>Точный расчёт за 30 секунд</div>
-      <h1>Калькулятор удобрений для <span style="color:#28B0D8">аквариума</span></h1>
-      <p>Рассчитайте точную дозировку макро- и микроудобрений — с учётом объёма, режима подмены и совместимости составов.</p>
-      <div class="hero-buttons">
-        <a href="register.html" class="btn-primary">Начать бесплатно</a>
-        <a href="#how" class="btn-ghost">Как работает</a>
+<!-- ═══ VARIANT A ═══ -->
+<div id="variant-a" class="page">
+
+  <!-- LEFT: plan info -->
+  <div class="left-panel">
+    <div>
+      <div class="lp-title">Оплатил раз —
+рассчитал много раз</div>
+      <div class="lp-sub">Без ограничений на количество аквариумов</div>
+      <div class="plan-badge"> Точность расчетов</div>
+      <div class="plan-card" style="font-size: 14px">
+        <div class="plan-name" style="font-size: 14px; height: 18px">AQUACALC</div>
+        <div class="plan-price" style="font-size: 1px; height: 4px; text-align: left">99 Р/ cутки</div>
+        <div class="plan-desc">Без привязки карты</div>
+        <div class="plan-features">
+          <div class="plan-feat"><div class="plan-feat-icon"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Неограниченные расчёты</div>
+          <div class="plan-feat"><div class="plan-feat-icon"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>База удобрений 30+</div>
+          <div class="plan-feat"><div class="plan-feat-icon"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Экспорт и печать</div>
+          <div class="plan-feat"><div class="plan-feat-icon"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div> </div>
+        </div>
       </div>
     </div>
-    <div class="hero-visual">
-      <div class="mock-topbar">
-        <div class="mock-logo">
-          <div class="mock-logo-icon"><svg width="11" height="11" viewBox="0 0 15 15" fill="none"><path d="M3 12V5.5l4.5-4L12 5.5V12M5.5 12V9h4v3" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          Aqua<span style="color:#26D1FE">Calc</span>
-        </div>
-        <div class="mock-pill">Доступ активен</div>
+    <div class="security-note">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1L2 3.5v4c0 2.8 2.1 5.4 5 6 2.9-.6 5-3.2 5-6v-4L7 1z" stroke="rgba(255,255,255,0.4)" stroke-width="1.2" stroke-linejoin="round"/></svg>
+      Безопасная оплата · Данные карты не хранятся
+    </div>
+  </div>
+
+  <!-- RIGHT: form (tabs for register / pay) -->
+  <div class="right-panel">
+    <div class="form-wrap">
+      <div class="form-tabs">
+        <button class="tab active" id="tab-reg" onclick="showTab('reg')">Регистрация</button>
+        <button class="tab" id="tab-pay" onclick="showTab('pay')">Оплата</button>
       </div>
-      <div class="mock-section">
-        <div class="mock-sec-hdr"><div class="mock-badge">1</div><div class="mock-sec-title">Аквариум</div></div>
-        <div class="mock-row">
-          <div class="mock-field"><div class="mock-flbl">Объём аквариума</div><div class="mock-inp filled">80</div></div>
-          <div class="mock-field"><div class="mock-flbl">Объём подмены</div><div class="mock-inp filled">20</div></div>
+
+      <!-- REGISTER form -->
+      <div id="form-reg">
+        <div class="form-title">Создать аккаунт</div>
+        <div class="form-sub">7 дней бесплатно, потом 299 ₽/месяц</div>
+        <div class="field">
+          <label class="flbl">Email</label>
+          <input class="finput" type="email" placeholder="you@example.com">
         </div>
+        <div class="field">
+          <label class="flbl">Пароль</label>
+          <input class="finput" type="password" placeholder="Минимум 8 символов">
+        </div>
+        <div class="field">
+          <label class="flbl">
+</label>
+          <input class="finput" type="text" placeholder="Как вас зовут?">
+        </div>
+        <button class="btn-submit" onclick="showTab('pay')">Продолжить →</button>
+        <div class="divider"><div class="divider-line"></div><div class="divider-text">или войдите через</div><div class="divider-line"></div></div>
+        <button class="social-btn">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M17.1 9.2c0-.6-.1-1.2-.2-1.7H9v3.3h4.5c-.2 1-.8 1.9-1.7 2.4v2h2.7c1.6-1.5 2.6-3.7 2.6-6z" fill="#4285F4"/><path d="M9 18c2.3 0 4.2-.7 5.5-2l-2.7-2c-.8.5-1.7.8-2.8.8-2.2 0-4-1.5-4.7-3.4H1.5v2C2.8 16 5.7 18 9 18z" fill="#34A853"/><path d="M4.3 11.4c-.2-.5-.3-1-.3-1.4 0-.5.1-1 .3-1.4V6.6H1.5C.9 7.7.5 8.8.5 10c0 1.2.4 2.3 1 3.4l2.8-2z" fill="#FBBC04"/><path d="M9 3.6c1.2 0 2.3.4 3.2 1.2l2.4-2.4C13.2.9 11.3 0 9 0 5.7 0 2.8 2 1.5 4.9l2.8 2C5 5.1 6.8 3.6 9 3.6z" fill="#EA4335"/></svg>
+          Войти через Google
+        </button>
+        <div class="form-footer">Уже есть аккаунт? <a href="#">Войти</a><br>Регистрируясь, вы принимаете <a href="#">условия использования</a></div>
       </div>
-      <div class="mock-section">
-        <div class="mock-sec-hdr"><div class="mock-badge">3</div><div class="mock-sec-title">Удобрения</div></div>
-        <div style="display:flex;flex-direction:column;gap:6px">
-          <div class="mock-fert-row">
-            <div><div class="mock-fert-name">Aquayer Macro</div><div class="mock-fert-brand">Aquayer</div></div>
-            <div class="mock-inp filled" style="width:58px;text-align:right;font-size:13px">5</div>
+
+      <!-- PAYMENT form -->
+      <div id="form-pay" style="display:none">
+        <div class="plan-summary">
+          <div><div class="ps-label">Тариф</div><div class="ps-name">AquaCalc Pro</div><div style="font-size:12px;color:var(--green);font-weight:500;margin-top:2px">✓ 7 дней бесплатно</div></div>
+          <div class="ps-price">299 ₽<span style="font-size:13px;font-weight:400;color:var(--muted)">/мес</span></div>
+        </div>
+        <div class="form-title">Данные карты</div>
+        <div class="form-sub" style="margin-bottom:20px">Списание начнётся через 7 дней</div>
+        <div class="field">
+          <label class="flbl">Номер карты</label>
+          <div class="card-input-wrap">
+            <input class="finput" type="text" placeholder="0000 0000 0000 0000">
+            <div class="card-icons">
+              <div class="card-icon" style="background:#1A1F71;color:#fff">VISA</div>
+              <div class="card-icon" style="background:#EB001B;color:#fff">MC</div>
+            </div>
           </div>
-          <div class="mock-fert-row">
-            <div><div class="mock-fert-name">Aquayer Micro</div><div class="mock-fert-brand">Aquayer</div></div>
-            <div class="mock-inp filled" style="width:58px;text-align:right;font-size:13px">3</div>
+        </div>
+        <div class="field-row">
+          <div class="field" style="margin-bottom:0">
+            <label class="flbl">Срок действия</label>
+            <input class="finput" type="text" placeholder="ММ / ГГ">
+          </div>
+          <div class="field" style="margin-bottom:0">
+            <label class="flbl">CVV</label>
+            <input class="finput" type="text" placeholder="•••">
+          </div>
+        </div>
+        <div class="field" style="margin-top:16px">
+          <label class="flbl">Имя на карте</label>
+          <input class="finput" type="text" placeholder="IVAN IVANOV">
+        </div>
+        <button class="btn-submit">Начать 7 дней бесплатно</button>
+        <div class="secure-badges">
+          <div class="secure-badge"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 1L2 3.5v4c0 2.8 2.1 5.4 5 6 2.9-.6 5-3.2 5-6v-4L7 1z" stroke="#94A3B8" stroke-width="1.2" stroke-linejoin="round"/></svg>Защищённая оплата</div>
+          <div class="secure-badge"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Отмена без штрафов</div>
+          <div class="secure-badge"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="#94A3B8" stroke-width="1.2"/><path d="M6 4v2l1.5 1.5" stroke="#94A3B8" stroke-width="1.2" stroke-linecap="round"/></svg>Списание через 7 дней</div>
+        </div>
+        <div class="form-footer" style="margin-top:12px"><a href="#" onclick="showTab('reg');return false">← Назад</a></div>
+      </div>
+
+    </div>
+  </div>
+</div><!-- /variant-a -->
+
+<!-- ═══ VARIANT B ═══ -->
+<div id="variant-b" class="page-b">
+  <div class="page-b-inner">
+
+    <!-- Plan card -->
+    <div class="mini-left">
+      <div style="font-family:'Nobile',sans-serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:8px;letter-spacing:-.02em">AquaCalc</div>
+      <div style="font-size:14px;color:rgba(255,255,255,0.55);margin-bottom:28px">Полный доступ ко всем функциям</div>
+      <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:6px">
+        <span style="font-family:'Nobile',sans-serif;font-size:48px;font-weight:700;color:#fff;letter-spacing:-.03em">99</span>
+        <span style="font-size:18px;color:rgba(255,255,255,0.6)">P/сутки</span>
+      </div>
+      <div style="font-size:13px;color:var(--yellow);font-weight:600;margin-bottom:28px">✨ Точность и скорость</div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:36px">
+        <div class="plan-feat"><div class="plan-feat-icon"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Точные расчёты</div>
+        <div class="plan-feat"><div class="plan-feat-icon"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>30+ база удобрений</div>
+        <div class="plan-feat"><div class="plan-feat-icon"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Уникальные рецепты</div>
+        <div class="plan-feat"><div class="plan-feat-icon"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Печать расчетов</div>
+      </div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.35);display:flex;align-items:center;gap:6px">
+        <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 1L2 3.5v4c0 2.8 2.1 5.4 5 6 2.9-.6 5-3.2 5-6v-4L7 1z" stroke="rgba(255,255,255,0.35)" stroke-width="1.2" stroke-linejoin="round"/></svg>
+        Безопасная оплата · Данные карты не хранятся
+      </div>
+    </div>
+
+    <!-- Form card -->
+    <div class="mini-right">
+      <div style="font-family:'Nobile',sans-serif;font-size:22px;font-weight:500;color:rgb(77,96,143);margin-bottom:6px;letter-spacing:-.02em">Создать аккаунт</div>
+      <div style="font-size:14px;color:rgb(172,174,178);margin-bottom:24px">После регистрации введите данные карты</div>
+
+      <div class="field">
+        <label class="flbl">Email</label>
+        <input class="finput" type="email" placeholder="you@example.com">
+      </div>
+      <div class="field">
+        <label class="flbl">Пароль</label>
+        <input class="finput" type="password" placeholder="Минимум 8 символов">
+      </div>
+      <div style="height:1px;background:var(--border);margin:16px 0"></div>
+      <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:14px">Данные карты</div>
+      <div class="field">
+        <label class="flbl">Номер карты</label>
+        <div class="card-input-wrap">
+          <input class="finput" type="text" placeholder="0000 0000 0000 0000">
+          <div class="card-icons">
+            <div class="card-icon" style="background:#1A1F71;color:#fff">VISA</div>
+            <div class="card-icon" style="background:#EB001B;color:#fff">MC</div>
           </div>
         </div>
       </div>
-      <div class="mock-btn">Рассчитать</div>
+      <div class="field-row">
+        <div class="field" style="margin-bottom:0"><label class="flbl">Срок</label><input class="finput" type="text" placeholder="ММ / ГГ"></div>
+        <div class="field" style="margin-bottom:0"><label class="flbl">CVV</label><input class="finput" type="text" placeholder="•••"></div>
+      </div>
+      <button class="btn-submit" style="margin-top:20px;background-size:cover">Рассчитать  </button>
+      <div class="secure-badges" style="margin-top:14px">
+        <div class="secure-badge"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 1L2 3.5v4c0 2.8 2.1 5.4 5 6 2.9-.6 5-3.2 5-6v-4L7 1z" stroke="#94A3B8" stroke-width="1.2" stroke-linejoin="round"/></svg>Защищённая оплата</div>
+        <div class="secure-badge"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Отмена в любой момент</div>
+      </div>
+      <div class="form-footer" style="margin-top:14px">Уже есть аккаунт? <a href="#">Войти</a></div>
     </div>
+
   </div>
-</div>
+</div><!-- /variant-b -->
 
-<!-- BRANDS -->
-<div class="brands">
-  <div class="brands-inner">
-    <span class="brands-label">Поддерживаемые бренды:</span>
-    <span class="brand-chip">Aquayer</span>
-    <span class="brand-chip">Dennerle</span>
-    <span class="brand-chip">Tropica</span>
-    <span class="brand-chip">Sera</span>
-    <span class="brand-chip">JBL</span>
-    <span class="brand-chip">Seachem</span>
-    <span class="brand-chip">Aqua Botanic</span>
-  </div>
-</div>
-
-<!-- FEATURES -->
-<div id="features">
-  <div class="section">
-    <div class="section-label">Возможности</div>
-    <div class="section-title">Всё для точного ухода<br>за растительным аквариумом</div>
-    <div class="section-sub">Никаких таблиц вручную — просто введите данные и получите готовый расчёт.</div>
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon" style="background:#E0F6FC">💧</div>
-        <h3>Учёт объёма и подмен</h3>
-        <p>Задайте объём аквариума и частоту подмены воды — калькулятор автоматически скорректирует дозировку.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon" style="background:#E8FAD8">🌿</div>
-        <h3>База из 30+ препаратов</h3>
-        <p>Aquayer, Dennerle, Tropica, Sera, JBL, Seachem, Aqua Botanic — все популярные серии уже внесены.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon" style="background:#FDE8FD">⚗️</div>
-        <h3>8 элементов в расчёте</h3>
-        <p>NO₃, PO₄, K, Fe, Mn, Mg, Ca, SO₄ — полный профиль питательных элементов для ваших растений.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon" style="background:#FFF3C2">🔄</div>
-        <h3>Три режима внесения</h3>
-        <p>Каждый день, вместе с подменой воды или в произвольные дни — выбирайте удобный режим.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon" style="background:#E0F6FC">📊</div>
-        <h3>Жёсткость воды</h3>
-        <p>Автоматический перевод концентрации Mg и Ca в градусы жёсткости °dH.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon" style="background:#E8FAD8">📋</div>
-        <h3>Экспорт результатов</h3>
-        <p>Скопируйте или распечатайте готовый расчёт — удобно для записей и напоминаний.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- HOW IT WORKS -->
-<div id="how" class="how-bg">
-  <div class="how-inner">
-    <div class="section-label">Как работает</div>
-    <div class="section-title" style="margin-bottom:14px">Три шага до готового расчёта</div>
-    <div class="section-sub" style="margin-bottom:52px">Не нужно быть химиком — просто введите данные своего аквариума.</div>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <h3>Укажите аквариум</h3>
-        <p>Введите объём аквариума и объём подменной воды в литрах.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <h3>Выберите удобрения</h3>
-        <p>Добавьте препараты из базы и введите дозу на один раз.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <h3>Получите расчёт</h3>
-        <p>Мгновенная таблица с концентрацией каждого элемента — ежедневно и за период.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- FERTILIZERS -->
-<div id="fertilizers" class="ferts-bg">
-  <div class="section" style="padding-top:0;padding-bottom:0">
-    <div class="section-label">База удобрений</div>
-    <div class="section-title">Поддерживаемые препараты</div>
-    <div class="section-sub">Регулярно пополняется. Не нашли свой бренд? Можно добавить вручную.</div>
-    <div class="ferts-grid">
-      <div class="fert-chip"><div class="fert-brand">Aquayer</div><div class="fert-name">Macro</div></div>
-      <div class="fert-chip"><div class="fert-brand">Aquayer</div><div class="fert-name">Micro</div></div>
-      <div class="fert-chip"><div class="fert-brand">Aquayer</div><div class="fert-name">Калий</div></div>
-      <div class="fert-chip"><div class="fert-brand">Aquayer</div><div class="fert-name">Железо</div></div>
-      <div class="fert-chip"><div class="fert-brand">Aquayer</div><div class="fert-name">GH+</div></div>
-      <div class="fert-chip"><div class="fert-brand">Dennerle</div><div class="fert-name">Plant Care Pro</div></div>
-      <div class="fert-chip"><div class="fert-brand">Dennerle</div><div class="fert-name">Plant Care N</div></div>
-      <div class="fert-chip"><div class="fert-brand">Dennerle</div><div class="fert-name">Plant Care K</div></div>
-      <div class="fert-chip"><div class="fert-brand">Tropica</div><div class="fert-name">Premium Complete</div></div>
-      <div class="fert-chip"><div class="fert-brand">Tropica</div><div class="fert-name">Specialised</div></div>
-      <div class="fert-chip"><div class="fert-brand">Sera</div><div class="fert-name">Florena Macro</div></div>
-      <div class="fert-chip"><div class="fert-brand">Sera</div><div class="fert-name">Florena Micro</div></div>
-      <div class="fert-chip"><div class="fert-brand">JBL</div><div class="fert-name">ProScape Macro</div></div>
-      <div class="fert-chip"><div class="fert-brand">JBL</div><div class="fert-name">ProScape Fe Micro</div></div>
-      <div class="fert-chip"><div class="fert-brand">Seachem</div><div class="fert-name">Flourish</div></div>
-      <div class="fert-chip"><div class="fert-brand">Seachem</div><div class="fert-name">Flourish Iron</div></div>
-      <div class="fert-chip"><div class="fert-brand">Aqua Botanic</div><div class="fert-name">Macro</div></div>
-      <div class="fert-chip"><div class="fert-brand">Aqua Botanic</div><div class="fert-name">Micro</div></div>
-    </div>
-  </div>
-</div>
-
-<!-- CTA BANNER -->
-<div class="cta-banner">
-  <h2>Попробуйте AquaCalc сегодня</h2>
-  <p>Рассчитывайте дозировки удобрений для своего аквариума по уникальным формулам быстро и без ошибок</p>
-  <a href="register.html" class="btn-white">Начать сегодня →</a>
-</div>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-logo">
-      <div class="footer-logo-icon"><svg width="14" height="14" viewBox="0 0 15 15" fill="none"><path d="M3 12V5.5l4.5-4L12 5.5V12M5.5 12V9h4v3" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      Aqua<span style="color:#26D1FE">Calc</span>
-    </div>
-    <div class="footer-links">
-      <a href="#">Политика конфиденциальности</a>
-      <a href="#">Поддержка</a>
-    </div>
-    <div class="footer-copy">© 2026 AquaCalc</div>
-  </div>
-</footer>
-
+<script>
+function showVariant(v) {
+  document.getElementById('variant-a').style.display = v === 'a' ? 'flex' : 'none';
+  const b = document.getElementById('variant-b');
+  b.style.display = v === 'b' ? 'flex' : 'none';
+  document.querySelectorAll('.vbtn').forEach((btn, i) => btn.classList.toggle('active', (i===0&&v==='a')||(i===1&&v==='b')));
+}
+function showTab(t) {
+  document.getElementById('form-reg').style.display = t === 'reg' ? '' : 'none';
+  document.getElementById('form-pay').style.display = t === 'pay' ? '' : 'none';
+  document.getElementById('tab-reg').classList.toggle('active', t === 'reg');
+  document.getElementById('tab-pay').classList.toggle('active', t === 'pay');
+}
+</script>
 </body>
 </html>
