@@ -358,16 +358,20 @@ function App() {
         <div style={secBody}>
           {entries.length > 0 && (
             <>
-              <div style={{display:'flex',gap:4,marginBottom:2}}>
-                {['daily','total'].map(m=>(
-                  <button key={m} onClick={()=>setColMode(m)} style={{
-                    padding:'5px 12px',borderRadius:100,cursor:'pointer',fontSize:12,
-                    border:`1.5px solid ${colMode===m?'#A8E8F8':'#DDE5F0'}`,
-                    background:colMode===m?'#E0F6FC':'none',
-                    color:colMode===m?'#1A7A96':'#64748B',
-                    fontWeight:colMode===m?600:400,fontFamily:"'Inter',sans-serif",transition:'all .12s',
-                  }}>{m==='daily'?'Ежедневная доза':'Общая доза за период'}</button>
-                ))}
+              <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:10}}>
+                <span style={{fontSize:13,color:'#64748B',fontFamily:"'Inter',sans-serif"}}>Указать дозу</span>
+                <div style={{display:'flex',background:'#F0F4FA',borderRadius:100,padding:3,gap:2}}>
+                  {['daily','total'].map(m=>(
+                    <button key={m} onClick={()=>setColMode(m)} style={{
+                      padding:'5px 14px',borderRadius:100,cursor:'pointer',fontSize:12,border:'none',
+                      background:colMode===m?'#fff':'none',
+                      color:colMode===m?'#0F172A':'#64748B',
+                      fontWeight:colMode===m?600:400,
+                      fontFamily:"'Inter',sans-serif",transition:'all .12s',
+                      boxShadow:colMode===m?'0 1px 4px rgba(0,0,0,.1)':'none',
+                    }}>{m==='daily'?'в день':'за период'}</button>
+                  ))}
+                </div>
               </div>
               <table style={{width:'100%',borderCollapse:'collapse',border:'1.5px solid #DDE5F0',borderRadius:12,overflow:'hidden'}}>
                 <thead>
@@ -381,8 +385,8 @@ function App() {
                   {entries.map((e,i)=>(
                     <tr key={e.id}>
                       <td style={{padding:'11px 12px',fontSize:13,borderBottom:i<entries.length-1?'1px solid #EEF2F8':'none',verticalAlign:'middle'}}>
-                        <div style={{fontWeight:600,color:'#0F172A',fontSize:14,fontFamily:"'Inter',sans-serif"}}>{e.name}</div>
-                        <div style={{fontSize:11,color:'#94A3B8',marginTop:2,fontFamily:"'Inter',sans-serif"}}>{e.brand}</div>
+                        <div style={{fontSize:10,fontWeight:700,color:'#28B0D8',letterSpacing:'.08em',textTransform:'uppercase',fontFamily:"'Nobile',sans-serif",marginBottom:2}}>{e.brand}</div>
+                        <div style={{fontWeight:500,color:'#0F172A',fontSize:14,fontFamily:"'Inter',sans-serif"}}>{e.name}</div>
                       </td>
                       <td style={{padding:'11px 12px',borderBottom:i<entries.length-1?'1px solid #EEF2F8':'none',verticalAlign:'middle'}}>
                         <div style={{display:'flex',alignItems:'center',justifyContent:'flex-end',gap:6}}>
