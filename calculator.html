@@ -28,6 +28,9 @@ nav{background:#fff;border-bottom:1px solid #DDE5F0;position:sticky;top:0;z-inde
 .nav-btn:hover{border-color:#28B0D8;color:#28B0D8}
 .nav-btn-primary{background:linear-gradient(135deg,#28B0D8,#1A8FB2);color:#fff;border:none;font-weight:600;box-shadow:0 2px 8px rgba(40,176,216,.3);font-family:'Nobile',sans-serif}
 .nav-btn-primary:hover{background:linear-gradient(135deg,#1A8FB2,#126E8A)}
+
+<style>
+input::placeholder { color: #C8D4E8 !important; opacity: 1; }
 </style>
 </head>
 <body>
@@ -127,7 +130,7 @@ function InputField({label, unit, value, onChange, placeholder}) {
         style={{
           width:'100%',padding:'10px 12px',fontSize:14,fontWeight:400,
           border:`1.5px solid ${focused ? '#28B0D8' : filled ? '#A8E8F8' : '#DDE5F0'}`,
-          borderRadius:10,background: filled ? '#E0F6FC' : '#FAFCFF',
+          borderRadius:10,background: filled ? 'rgba(40,176,216,0.08)' : '#FAFCFF',
           color:'#0F172A',fontFamily:"'Inter',sans-serif",outline:'none',
           boxShadow: focused ? '0 0 0 3px rgba(40,176,216,.12)' : 'none',
           transition:'all .15s',
@@ -359,7 +362,7 @@ function App() {
           {entries.length > 0 && (
             <>
               <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:10}}>
-                <span style={{fontSize:13,color:'#64748B',fontFamily:"'Inter',sans-serif"}}>Указать дозу</span>
+                <span style={{fontSize:13,color:'#64748B',fontFamily:"'Inter',sans-serif"}}>Укажите дозу вносимых удобрений</span>
                 <div style={{display:'flex',background:'#F0F4FA',borderRadius:100,padding:3,gap:2}}>
                   {['daily','total'].map(m=>(
                     <button key={m} onClick={()=>setColMode(m)} style={{
@@ -394,19 +397,17 @@ function App() {
                             onChange={ev=>updateDose(e.id,ev.target.value)}
                             style={{width:72,padding:'7px 9px',fontSize:14,fontWeight:400,
                               border:`1.5px solid ${e.dose?'#A8E8F8':'#DDE5F0'}`,
-                              borderRadius:9,background:e.dose?'#E0F6FC':'#FAFCFF',
+                              borderRadius:9,background:e.dose?'rgba(40,176,216,0.08)':'#FAFCFF',
                               color:'#0F172A',textAlign:'right',fontFamily:"'Inter',sans-serif",outline:'none'}}
                             onFocus={ev=>{ev.target.style.borderColor='#28B0D8';ev.target.style.boxShadow='0 0 0 3px rgba(40,176,216,.1)'}}
                             onBlur={ev=>{ev.target.style.boxShadow='none';ev.target.style.borderColor=e.dose?'#A8E8F8':'#DDE5F0'}}
                           />
-                          <span style={{fontSize:11,color:'#94A3B8',whiteSpace:'nowrap',fontFamily:"'Inter',sans-serif"}}>
-                            {colMode==='daily'?'мл/день':`мл/${fp}дн`}
-                          </span>
+
                         </div>
                       </td>
                       <td style={{padding:'11px 12px',borderBottom:i<entries.length-1?'1px solid #EEF2F8':'none',width:44}}>
                         <button onClick={()=>removeFert(e.id)} style={{
-                          background:'none',border:'1.5px solid #DDE5F0',borderRadius:8,
+                          background:'none',border:'none',borderRadius:8,
                           cursor:'pointer',color:'#94A3B8',fontSize:13,padding:'5px 9px',
                           fontFamily:"'Inter',sans-serif",transition:'all .12s',
                         }}
@@ -460,7 +461,7 @@ function App() {
         const stL={ok:'оптим.',lo:'низко',hi:'высоко',tr:'след.'};
         const col=3+(withChange?1:0);
         const grp=(label)=>(
-          <tr key={label}><td colSpan={col} style={{padding:'6px 16px',fontSize:10,fontWeight:700,color:'#94A3B8',letterSpacing:'.1em',textTransform:'uppercase',background:'#F7F9FC',borderBottom:'1px solid #DDE5F0',fontFamily:"'Nobile',sans-serif"}}>{label}</td></tr>
+          <tr key={label}><td colSpan={col} style={{padding:'10px 20px',fontSize:10,fontWeight:700,color:'#94A3B8',letterSpacing:'.1em',textTransform:'uppercase',background:'#F7F9FC',borderBottom:'1px solid #DDE5F0',fontFamily:"'Nobile',sans-serif"}}>{label}</td></tr>
         );
         const row=(k,isMicro)=>{
           const d=results[k],t=d*(p||7),isZ=t<0.0000005;
@@ -468,13 +469,13 @@ function App() {
           const s=isMicro?st(t,mTgt[k]):'tr';
           return (
             <tr key={k}>
-              <td style={{padding:'11px 16px',borderBottom:'1px solid #EEF2F8'}}>
+              <td style={{padding:'16px 20px',borderBottom:'1px solid #EEF2F8'}}>
                 <span style={{fontSize:15,fontWeight:700,fontFamily:"'Nobile',sans-serif",color:'#0F172A'}}>{ELN[k]}</span>
                 <span style={{fontSize:11,color:'#94A3B8',marginLeft:8,fontFamily:"'Inter',sans-serif"}}>{ELF[k]}</span>
               </td>
-              <td style={{padding:'11px 16px',fontSize:13,textAlign:'right',borderBottom:'1px solid #EEF2F8',color:isZ?'#CBD5E0':'#334155',fontFamily:"'Inter',sans-serif"}}>{isZ?'—':fmt(d)}</td>
-              <td style={{padding:'11px 16px',fontSize:13,textAlign:'right',borderBottom:'1px solid #EEF2F8',color:isZ?'#CBD5E0':'#334155',fontFamily:"'Inter',sans-serif"}}>{isZ?'—':(ghV||fmt(t))}</td>
-              {withChange&&<td style={{padding:'11px 16px',textAlign:'right',borderBottom:'1px solid #EEF2F8'}}>
+              <td style={{padding:'16px 20px',fontSize:13,textAlign:'right',borderBottom:'1px solid #EEF2F8',color:isZ?'#CBD5E0':'#334155',fontFamily:"'Inter',sans-serif"}}>{isZ?'—':fmt(d)}</td>
+              <td style={{padding:'16px 20px',fontSize:13,textAlign:'right',borderBottom:'1px solid #EEF2F8',color:isZ?'#CBD5E0':'#334155',fontFamily:"'Inter',sans-serif"}}>{isZ?'—':(ghV||fmt(t))}</td>
+              {withChange&&<td style={{padding:'16px 20px',textAlign:'right',borderBottom:'1px solid #EEF2F8'}}>
                 {isZ?<span style={{color:'#CBD5E0',fontSize:13}}>—</span>:
                 isMicro?<span style={{display:'inline-flex',alignItems:'center',gap:4,padding:'2px 8px',borderRadius:100,fontSize:10,fontWeight:600,background:stBg[s],color:stC[s],fontFamily:"'Inter',sans-serif"}}>
                   <span style={{width:5,height:5,borderRadius:'50%',background:stC[s],display:'inline-block'}}/>{stL[s]}
@@ -513,7 +514,7 @@ function App() {
               <table style={{width:'100%',borderCollapse:'collapse',minWidth:360}}>
                 <thead><tr>
                   {['Элемент','В день, мг/л','Общая доза, мг/л'].concat(withChange?['Доза в подмене, мг/л']:[]).map((h,i)=>(
-                    <th key={h} style={{background:'#F5F8FC',padding:'10px 16px',fontSize:11,fontWeight:700,color:'#64748B',letterSpacing:'.04em',textAlign:i===0?'left':'right',borderBottom:'1.5px solid #DDE5F0',whiteSpace:'nowrap',fontFamily:"'Nobile',sans-serif"}}>{h}</th>
+                    <th key={h} style={{background:'#F5F8FC',padding:'14px 20px',fontSize:11,fontWeight:700,color:'#64748B',letterSpacing:'.04em',textAlign:i===0?'left':'right',borderBottom:'1.5px solid #DDE5F0',whiteSpace:'nowrap',fontFamily:"'Nobile',sans-serif"}}>{h}</th>
                   ))}
                 </tr></thead>
                 <tbody>
