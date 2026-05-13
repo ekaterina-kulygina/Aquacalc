@@ -260,6 +260,7 @@ function App() {
   const [entries, setEntries] = React.useState([]);
   const [colMode, setColMode] = React.useState('daily');
   const [results, setResults] = React.useState(null);
+  const [showHard, setShowHard] = React.useState(false);
   const fertMap = getAllFerts();
 
   const getFP = () => {
@@ -299,7 +300,13 @@ function App() {
       const f = fertMap[e.id];
       ELK.forEach(k=>{ if(f[k]>0) totals[k]+=f[k]*dml/v; });
     });
-    setResults(totals);
+    const fp2 = getFP();
+    const perDay = {}, perPeriod = {};
+    ELK.forEach(k => {
+      perDay[k] = totals[k];
+      perPeriod[k] = totals[k] * (p||7);
+    });
+    setResults({perDay, perPeriod, ...totals});
     setTimeout(()=>document.getElementById('results-block')?.scrollIntoView({behavior:'smooth',block:'nearest'}),100);
   };
 
@@ -316,8 +323,38 @@ function App() {
   const fp = getFP();
   const doseHeader = colMode==='daily' ? 'Ежедневная доза, мл' : `Общая доза за ${fp} дн, мл`;
   const modeLabel = {daily:'каждый день',change:`при подмене раз в ${p||7} дней`,custom:`раз в ${fp} дней`};
-  const active = results ? ELK.filter(k=>results[k]>0) : [];
   const withChange = mode==='change' && (parseFloat(cvol)||0)>0;
+
+  const ELEMENTS_MAP = {
+    no3:{group:'macro',target:[5,30]},
+    po4:{group:'macro',target:[0.5,3]},
+    k:{group:'macro',target:[5,30]},
+    mg:{group:'macro',target:[2,10],hardness:true},
+    ca:{group:'macro',target:[10,30],hardness:true},
+    so4:{group:'macro',target:null},
+    na:{group:'macro',target:null},
+    fe:{group:'micro',target:[0.05,0.5]},
+    mn:{group:'micro',target:[0.02,0.2]},
+    b:{group:'micro',target:null},
+    zn:{group:'micro',target:null},
+    mo:{group:'micro',target:null},
+    cu:{group:'micro',target:null},
+    co:{group:'micro',target:null},
+    ni:{group:'micro',target:null},
+    v:{group:'micro',target:null},
+  };
+  const ELEMENTS = Object.entries(ELEMENTS_MAP).map(([key,v])=>({key,...v}));
+
+  const rangeStatus = (val, target) => {
+    if (!target) return 'tr';
+    if (val < target[0]) return 'lo';
+    if (val > target[1]) return 'hi';
+    return 'ok';
+  };
+
+  const allActive = results ? Object.keys(results.perPeriod||{}).filter(k=>(results.perPeriod[k]||0)>0.0000005) : [];
+  const macroActive = allActive.filter(k=>ELEMENTS_MAP[k]?.group==='macro'||ELK.includes(k)&&!['fe','mn','b','zn','mo','cu','co','ni','v'].includes(k));
+  const microActive = allActive.filter(k=>['fe','mn','b','zn','mo','cu','co','ni','v'].includes(k));
 
   return (
     <div style={{maxWidth:600,margin:'0 auto',padding:'24px 16px 64px',display:'flex',flexDirection:'column',gap:12}}>
@@ -462,81 +499,201 @@ function App() {
       {/* Results */}
       {results && (
         <div id="results-block" style={{...card,marginTop:4}}>
-          <div style={{
-            background:'linear-gradient(135deg,#E0F6FC 0%,#E8FAD8 100%)',
-            borderBottom:'1.5px solid #A8E8F8',padding:'14px 18px',
-            display:'flex',alignItems:'center',gap:10,borderRadius:'16px 16px 0 0',
-          }}>
-            <div style={{width:28,height:28,borderRadius:'50%',background:'linear-gradient(135deg,#45C136,#2E9422)',
-              display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,
-              boxShadow:'0 2px 8px rgba(69,193,54,.35)'}}>
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
+
+          {/* Шапка */}
+          <div style={{padding:'18px 20px',borderBottom:'1.5px solid #DDE5F0'}}>
+            <div style={{fontFamily:"'Nobile',sans-serif",fontSize:18,fontWeight:700,color:'#0F172A',letterSpacing:'-.01em',marginBottom:8}}>
+              Концентрации элементов в аквариуме
             </div>
-            <div>
-              <div style={{fontSize:14,fontWeight:700,color:'#1A7A96',fontFamily:"'Nobile',sans-serif",letterSpacing:'-.01em'}}>Концентрация элементов в аквариуме</div>
-              <div style={{fontSize:11,color:'#28B0D8',marginTop:2,fontFamily:"'Inter',sans-serif"}}>
-                Аквариум {v} л · удобрения вносятся {modeLabel[mode]}
+            <div style={{fontSize:13,color:'#64748B',lineHeight:1.6}}>
+              <span>Аквариум <strong style={{color:'#0F172A'}}>{v}л</strong></span><br/>
+              <span>Подмена <strong style={{color:'#0F172A'}}>{cv}л</strong> раз в <strong style={{color:'#0F172A'}}>{p||7}дней</strong></span><br/>
+              <span>Режим подачи удобрений: <strong style={{color:'#0F172A'}}>{modeLabel[mode]}</strong></span>
+            </div>
+            {/* Тоггл жёсткости + ссылки */}
+            <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginTop:14,flexWrap:'wrap',gap:8}}>
+              <label style={{display:'flex',alignItems:'center',gap:8,cursor:'pointer',fontSize:13,color:'#64748B',userSelect:'none'}}>
+                <div onClick={()=>setShowHard(h=>!h)} style={{
+                  width:36,height:20,borderRadius:100,
+                  background:showHard?'#28B0D8':'#CBD5E0',
+                  position:'relative',transition:'background .15s',cursor:'pointer',flexShrink:0,
+                }}>
+                  <div style={{
+                    position:'absolute',top:2,left:showHard?18:2,width:16,height:16,
+                    borderRadius:'50%',background:'#fff',
+                    boxShadow:'0 1px 3px rgba(0,0,0,.2)',transition:'left .15s',
+                  }}/>
+                </div>
+                Повышение жёсткости
+              </label>
+              <div style={{display:'flex',gap:16}}>
+                <button onClick={()=>alert('График накопления — в разработке')} style={{
+                  background:'none',border:'none',cursor:'pointer',
+                  fontSize:13,fontWeight:500,color:'#28B0D8',fontFamily:"'Inter',sans-serif",
+                  display:'flex',alignItems:'center',gap:4,padding:0,
+                }}>
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 10l3-4 2.5 2.5 3-5 1.5 1.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  Накопление
+                </button>
+                <button onClick={()=>alert('Сравнение — в разработке')} style={{
+                  background:'none',border:'none',cursor:'pointer',
+                  fontSize:13,fontWeight:500,color:'#28B0D8',fontFamily:"'Inter',sans-serif",
+                  display:'flex',alignItems:'center',gap:4,padding:0,
+                }}>
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/><line x1="12" y1="3" x2="12" y2="11" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
+                  Сравнение
+                </button>
               </div>
             </div>
           </div>
+
+          {/* Таблица */}
           <div style={{overflowX:'auto'}}>
-            <table style={{width:'100%',borderCollapse:'collapse',minWidth:380}}>
+            <table style={{width:'100%',borderCollapse:'collapse',minWidth:360}}>
               <thead>
                 <tr>
-                  {['Элемент','Ежедневно',`За ${p||7} дн`,'Жёсткость'].concat(withChange?['Подмена']:[]).map((h,i)=>(
-                    <th key={h} style={{background:'#F5F8FC',padding:'9px 12px',fontSize:11,fontWeight:700,
-                      color:'#64748B',letterSpacing:'.05em',textAlign:i===0?'left':'right',
-                      borderBottom:'1.5px solid #DDE5F0',whiteSpace:'nowrap',fontFamily:"'Nobile',sans-serif"}}>{h}</th>
+                  {['Элемент','Доза в день, мг/л','Общая доза, мг/л'].concat(withChange?['Доза в подмене, мг/л']:[]).map((h,i)=>(
+                    <th key={h} style={{
+                      background:'#F5F8FC',padding:'10px 16px',
+                      fontSize:11,fontWeight:700,color:'#64748B',letterSpacing:'.04em',
+                      textAlign:i===0?'left':'right',borderBottom:'1.5px solid #DDE5F0',
+                      whiteSpace:'nowrap',fontFamily:"'Nobile',sans-serif",
+                    }}>{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
-                {active.map((k,i)=>{
-                  const d=results[k],t=d*(p||7);
-                  const gh=['mg','ca'].includes(k)?`${(t*7.14).toFixed(2)} °dH`:'—';
+                {/* Макроэлементы */}
+                <tr><td colSpan={3+(withChange?1:0)} style={{
+                  padding:'6px 16px',fontSize:10,fontWeight:700,color:'#94A3B8',
+                  letterSpacing:'.1em',textTransform:'uppercase',
+                  background:'#F7F9FC',borderBottom:'1px solid #DDE5F0',
+                  fontFamily:"'Nobile',sans-serif",
+                }}>Макроэлементы</td></tr>
+                {macroActive.map((k,i)=>{
+                  const d=results.perDay[k],t=results.perPeriod[k];
+                  const isZero=t<0.0000005;
+                  const gh=showHard&&['mg','ca'].includes(k)?`${(t*7.14).toFixed(2)} °dH`:null;
+                  const inChange=withChange?`+${fmt(d*(p||7)*(parseFloat(cvol)/v))} мг/л`:null;
                   return (
-                    <tr key={k}>
-                      <td style={{padding:'11px 12px',borderBottom:i<active.length-1?'1px solid #EEF2F8':'none'}}>
-                        <div style={{fontSize:15,fontWeight:700,fontFamily:"'Nobile',sans-serif",color:'#0F172A'}}>{ELN[k]}</div>
-                        <div style={{fontSize:11,color:'#94A3B8',marginTop:2,fontFamily:"'Inter',sans-serif"}}>{ELF[k]}</div>
+                    <tr key={k} style={{background:i%2===0?'#fff':'#FAFCFF'}}>
+                      <td style={{padding:'11px 16px',borderBottom:'1px solid #EEF2F8'}}>
+                        <div style={{display:'flex',alignItems:'baseline',gap:8}}>
+                          <span style={{fontSize:15,fontWeight:700,fontFamily:"'Nobile',sans-serif",color:'#0F172A'}}>{ELN[k]}</span>
+                          <span style={{fontSize:11,color:'#94A3B8',fontFamily:"'Inter',sans-serif"}}>{ELF[k]}</span>
+                        </div>
                       </td>
-                      {[`+${fmt(d)} мг/л`,`+${fmt(t)} мг/л`,gh].concat(withChange?[`+${fmt(d*(p||7)*(parseFloat(cvol)/v))} мг/л`]:[]).map((val,j)=>(
-                        <td key={j} style={{padding:'11px 12px',fontSize:13,textAlign:'right',
-                          borderBottom:i<active.length-1?'1px solid #EEF2F8':'none',
-                          color:'#334155',fontFamily:"'Inter',sans-serif"}}>{val}</td>
-                      ))}
+                      <td style={{padding:'11px 16px',fontSize:13,textAlign:'right',borderBottom:'1px solid #EEF2F8',color:isZero?'#CBD5E0':'#334155',fontFamily:"'Inter',sans-serif"}}>{isZero?'—':`${fmt(d)}`}</td>
+                      <td style={{padding:'11px 16px',fontSize:13,textAlign:'right',borderBottom:'1px solid #EEF2F8',color:isZero?'#CBD5E0':'#334155',fontFamily:"'Inter',sans-serif"}}>{isZero?'—':gh||`${fmt(t)}`}</td>
+                      {withChange&&<td style={{padding:'11px 16px',fontSize:13,textAlign:'right',borderBottom:'1px solid #EEF2F8',color:isZero?'#CBD5E0':'#64748B',fontFamily:"'Inter',sans-serif"}}>{isZero?'—':inChange}</td>}
+                    </tr>
+                  );
+                })}
+                {/* Микроэлементы */}
+                <tr><td colSpan={3+(withChange?1:0)} style={{
+                  padding:'6px 16px',fontSize:10,fontWeight:700,color:'#94A3B8',
+                  letterSpacing:'.1em',textTransform:'uppercase',
+                  background:'#F7F9FC',borderBottom:'1px solid #DDE5F0',
+                  fontFamily:"'Nobile',sans-serif",
+                }}>Микроэлементы</td></tr>
+                {microActive.map((k,i)=>{
+                  const d=results.perDay[k],t=results.perPeriod[k];
+                  const isZero=t<0.0000005;
+                  const status=ELEMENTS.find(e=>e.key===k)?.target?rangeStatus(t,ELEMENTS.find(e=>e.key===k).target):null;
+                  const statusColors={ok:{bg:'#E8FAD8',c:'#2E9422'},lo:{bg:'#FFF1DC',c:'#B25E00'},hi:{bg:'#FDE8E8',c:'#C0382B'},tr:{bg:'#F0F4FA',c:'#94A3B8'}};
+                  const statusLabel={ok:'оптим.',lo:'низко',hi:'высоко',tr:'след.'};
+                  return (
+                    <tr key={k} style={{background:i%2===0?'#fff':'#FAFCFF'}}>
+                      <td style={{padding:'11px 16px',borderBottom:'1px solid #EEF2F8'}}>
+                        <div style={{display:'flex',alignItems:'baseline',gap:8}}>
+                          <span style={{fontSize:15,fontWeight:700,fontFamily:"'Nobile',sans-serif",color:'#0F172A'}}>{ELN[k]}</span>
+                          <span style={{fontSize:11,color:'#94A3B8',fontFamily:"'Inter',sans-serif"}}>{ELF[k]}</span>
+                        </div>
+                      </td>
+                      <td style={{padding:'11px 16px',fontSize:13,textAlign:'right',borderBottom:'1px solid #EEF2F8',color:isZero?'#CBD5E0':'#334155',fontFamily:"'Inter',sans-serif"}}>{isZero?'—':fmt(d)}</td>
+                      <td style={{padding:'11px 16px',fontSize:13,textAlign:'right',borderBottom:'1px solid #EEF2F8',color:isZero?'#CBD5E0':'#334155',fontFamily:"'Inter',sans-serif"}}>{isZero?'—':fmt(t)}</td>
+                      {withChange&&<td style={{padding:'11px 16px',fontSize:13,textAlign:'right',borderBottom:'1px solid #EEF2F8',fontFamily:"'Inter',sans-serif"}}>
+                        {!isZero&&status&&<span style={{display:'inline-flex',alignItems:'center',gap:4,padding:'2px 8px',borderRadius:100,fontSize:10,fontWeight:600,background:statusColors[status].bg,color:statusColors[status].c}}>
+                          <span style={{width:5,height:5,borderRadius:'50%',background:statusColors[status].c,display:'inline-block'}}/>
+                          {statusLabel[status]}
+                        </span>}
+                        {isZero&&<span style={{color:'#CBD5E0'}}>—</span>}
+                      </td>}
                     </tr>
                   );
                 })}
               </tbody>
             </table>
           </div>
-          <div style={{padding:'13px 18px',borderTop:'1.5px solid #DDE5F0',display:'flex',gap:8}}>
-            <button onClick={()=>window.print()} style={{flex:1,padding:10,border:'1.5px solid #DDE5F0',borderRadius:10,
-              fontSize:13,color:'#64748B',background:'none',cursor:'pointer',fontFamily:"'Inter',sans-serif",
-              display:'flex',alignItems:'center',justifyContent:'center',gap:6,transition:'background .12s'}}
-              onMouseEnter={e=>e.currentTarget.style.background='#F5F8FC'}
-              onMouseLeave={e=>e.currentTarget.style.background='none'}>
-              <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="2" y="7.5" width="9" height="4.5" rx="1" stroke="currentColor" strokeWidth="1"/><path d="M3.5 7.5V3h6v4.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/><rect x="4" y="1" width="5" height="2" rx=".5" stroke="currentColor" strokeWidth="1"/></svg>
-              Распечатать
-            </button>
-            <button onClick={()=>{
-              const rows = active.map(k=>`${ELN[k]} (${ELF[k]}): ежедневно +${fmt(results[k])} мг/л`).join('\n');
-              navigator.clipboard.writeText(`AquaCalc\nАквариум ${v} л\n\n${rows}`).then(()=>alert('Скопировано!'));
-            }} style={{flex:1,padding:10,border:'none',borderRadius:10,fontSize:13,color:'#fff',
-              background:'linear-gradient(135deg,#1A74E0,#0D52A8)',cursor:'pointer',
-              fontFamily:"'Inter',sans-serif",fontWeight:600,boxShadow:'0 3px 10px rgba(16,102,204,.3)',transition:'all .15s'}}
-              onMouseEnter={e=>e.currentTarget.style.background='linear-gradient(135deg,#0D52A8,#0A3E82)'}
-              onMouseLeave={e=>e.currentTarget.style.background='linear-gradient(135deg,#1A74E0,#0D52A8)'}>
-              Скопировать
-            </button>
+
+          {/* Соотношения */}
+          <div style={{padding:'18px 20px',borderTop:'1.5px solid #DDE5F0',background:'#FAFCFF'}}>
+            <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:12}}>
+              <div style={{fontFamily:"'Nobile',sans-serif",fontSize:11,fontWeight:700,color:'#64748B',letterSpacing:'.08em',textTransform:'uppercase'}}>Соотношения элементов</div>
+              <a href="#" onClick={e=>{e.preventDefault();alert('Справка по соотношениям — в разработке');}} style={{fontSize:12,color:'#28B0D8',textDecoration:'none',fontFamily:"'Inter',sans-serif"}}>Нет нужного соотношения?</a>
+            </div>
+            <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:10}}>
+              {[
+                {label:'NO₃ / PO₄',a:'no3',b:'po4',target:[10,15]},
+                {label:'NO₃ / K',a:'no3',b:'k',target:[0.7,1.5]},
+                {label:'Fe / Mn',a:'fe',b:'mn',target:[2,4]},
+                {label:'Ca / Mg',a:'ca',b:'mg',target:[3,4]},
+              ].map(r=>{
+                const av=results.perPeriod[r.a],bv=results.perPeriod[r.b];
+                const val=av>0&&bv>0?av/bv:null;
+                const st=val==null?'tr':rangeStatus(val,r.target);
+                const borderColors={ok:'#BFE89A',lo:'#FBD7A6',hi:'#F5BFB7',tr:'#DDE5F0'};
+                const bgColors={ok:'#FBFFF6',lo:'#FFFCF4',hi:'#FFF6F4',tr:'#fff'};
+                return (
+                  <div key={r.label} style={{
+                    position:'relative',border:`1.5px solid ${borderColors[st]}`,
+                    borderRadius:10,padding:'14px 12px 10px',
+                    background:bgColors[st],
+                  }}>
+                    <div style={{position:'absolute',top:-8,left:10,background:bgColors[st],padding:'0 6px',fontFamily:"'Nobile',sans-serif",fontSize:10,fontWeight:700,color:st==='ok'?'#2E9422':'#64748B',letterSpacing:'.04em'}}>{r.label}</div>
+                    <div style={{fontFamily:"'Nobile',sans-serif",fontSize:18,fontWeight:700,color:val==null?'#CBD5E0':'#0F172A',lineHeight:1.1}}>{val==null?'—':val.toFixed(2)}</div>
+                    <div style={{fontSize:10,color:'#94A3B8',marginTop:3}}>цель {r.target[0]}–{r.target[1]}</div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-          <div onClick={reset} style={{fontSize:13,color:'#94A3B8',textAlign:'center',cursor:'pointer',
-            padding:12,fontFamily:"'Inter',sans-serif",transition:'color .15s'}}
-            onMouseEnter={e=>e.currentTarget.style.color='#334155'}
-            onMouseLeave={e=>e.currentTarget.style.color='#94A3B8'}>
-            ← Пересчитать
+
+          {/* Действия */}
+          <div style={{padding:'16px 20px',borderTop:'1.5px solid #DDE5F0',display:'flex',flexDirection:'column',gap:10}}>
+            <button onClick={()=>alert('Расписание — в разработке')} style={{
+              width:'100%',padding:14,
+              background:'#45C136',color:'#fff',border:'none',borderRadius:10,
+              fontSize:14,fontWeight:700,fontFamily:"'Nobile',sans-serif",
+              letterSpacing:'.06em',textTransform:'uppercase',cursor:'pointer',
+              boxShadow:'0 4px 12px rgba(69,193,54,.3)',
+              display:'flex',alignItems:'center',justifyContent:'center',gap:8,
+            }}>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2.5" y="3.5" width="11" height="10" rx="1.5" stroke="#fff" strokeWidth="1.4"/><path d="M2.5 6.5h11M5.5 2v3M10.5 2v3" stroke="#fff" strokeWidth="1.4" strokeLinecap="round"/></svg>
+              Составить расписание
+            </button>
+            <div style={{display:'flex',gap:8}}>
+              <button onClick={()=>window.scrollTo({top:0,behavior:'smooth'})} style={{
+                flex:1,padding:10,background:'#fff',border:'1.5px solid #DDE5F0',
+                color:'#64748B',borderRadius:10,fontSize:13,fontWeight:500,
+                cursor:'pointer',fontFamily:"'Inter',sans-serif",
+                display:'flex',alignItems:'center',justifyContent:'center',gap:6,
+              }}>
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M9 3.5L5.5 7L9 10.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                Изменить параметры
+              </button>
+              <button onClick={reset} style={{
+                flex:1,padding:10,background:'#fff',border:'1.5px solid #DDE5F0',
+                color:'#64748B',borderRadius:10,fontSize:13,fontWeight:500,
+                cursor:'pointer',fontFamily:"'Inter',sans-serif",
+                display:'flex',alignItems:'center',justifyContent:'center',gap:6,
+              }}>
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M11 6.5a4.5 4.5 0 11-1.2-3.05M11 2.5V5H8.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                Сбросить
+              </button>
+            </div>
           </div>
+
         </div>
       )}
 
