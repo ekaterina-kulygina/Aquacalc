@@ -58,6 +58,8 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 24px;height:
 .divider-text{font-size:12px;color:var(--muted);white-space:nowrap}
 .social-btn{width:100%;padding:11px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-weight:500;background:#fff;color:var(--text);cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .15s}
 .social-btn:hover{border-color:var(--blue);background:#EAF6FC}
+.form-back{display:inline-block;margin-bottom:16px;font-size:13px;font-weight:500;color:var(--muted);text-decoration:none}
+.form-back:hover{color:#28B0D8}
 .form-footer{font-size:12px;color:var(--muted);text-align:center;margin-top:20px;line-height:1.6}
 .form-footer a{color:var(--blue);text-decoration:none;font-weight:500}
 .card-input-wrap{position:relative}
@@ -135,6 +137,7 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 24px;height:
 
       <!-- Форма оплаты -->
       <div id="form-pay" style="display:none">
+        <a href="#" class="form-back" onclick="showTab('reg');return false">← Назад</a>
         <div class="form-title" style="margin-bottom:28px">Оплата</div>
         <div class="field">
           <label class="flbl">Номер карты</label>
@@ -167,7 +170,6 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 24px;height:
           <div class="secure-badge"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Без подписки</div>
           <div class="secure-badge"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="#94A3B8" stroke-width="1.2"/><path d="M6 4v2l1.5 1.5" stroke="#94A3B8" stroke-width="1.2" stroke-linecap="round"/></svg>Доступ 24 часа</div>
         </div>
-        <div class="form-footer" style="margin-top:12px"><a href="#" onclick="showTab('reg');return false">← Назад</a></div>
       </div>
 
     </div>
