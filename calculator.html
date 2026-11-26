@@ -434,15 +434,15 @@ function App() {
       <div style={{display:'flex',flexDirection:'column',gap:6}}>
         <button disabled={!canCalc} onClick={calculate} style={{
           width:'100%',padding:15,
-          background:canCalc?'#1A74E0':'#E2EAF4',
+          background:canCalc?'#28B0D8':'#E2EAF4',
           color:canCalc?'#fff':'#94A3B8',border:'none',borderRadius:13,
           fontSize:16,fontWeight:700,fontFamily:"'Nobile',sans-serif",
           cursor:canCalc?'pointer':'not-allowed',
           boxShadow:'none',
           transition:'all .15s',letterSpacing:'.01em',
         }}
-          onMouseEnter={e=>{if(canCalc){e.target.style.background='#0D52A8';e.target.style.boxShadow='none'}}}
-          onMouseLeave={e=>{if(canCalc){e.target.style.background='#1A74E0';e.target.style.boxShadow='none'}}}
+          onMouseEnter={e=>{if(canCalc){e.target.style.background='#1A8FB2';e.target.style.boxShadow='none'}}}
+          onMouseLeave={e=>{if(canCalc){e.target.style.background='#28B0D8';e.target.style.boxShadow='none'}}}
         >Рассчитать</button>
         <div style={{fontSize:11,color:'#94A3B8',textAlign:'center',minHeight:16,fontFamily:"'Inter',sans-serif"}}>{hint}</div>
       </div>
@@ -547,8 +547,8 @@ function App() {
               </div>
             </div>
             <div style={{padding:'16px 20px',borderTop:'1.5px solid #DDE5F0',background:'#F7F9FC',display:'flex',flexDirection:'column',gap:10}}>
-              <button onClick={()=>alert('В разработке')} style={{width:'100%',padding:14,background:'#45C136',color:'#fff',border:'none',borderRadius:10,fontSize:14,fontWeight:700,fontFamily:"'Nobile',sans-serif",letterSpacing:'.06em',textTransform:'uppercase',cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:8}}>
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2.5" y="3.5" width="11" height="10" rx="1.5" stroke="#fff" strokeWidth="1.4"/><path d="M2.5 6.5h11M5.5 2v3M10.5 2v3" stroke="#fff" strokeWidth="1.4" strokeLinecap="round"/></svg>
+              <button onClick={()=>alert('В разработке')} style={{width:'100%',padding:14,background:'#fff',color:'#1A8FB2',border:'1.5px solid #28B0D8',borderRadius:10,fontSize:14,fontWeight:700,fontFamily:"'Nobile',sans-serif",letterSpacing:'.06em',textTransform:'uppercase',cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:8}}>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2.5" y="3.5" width="11" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.4"/><path d="M2.5 6.5h11M5.5 2v3M10.5 2v3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
                 Составить расписание
               </button>
               <div style={{display:'flex',gap:8}}>
