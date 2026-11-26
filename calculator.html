@@ -141,7 +141,6 @@ function InputField({label, unit, value, onChange, placeholder}) {
 
 // ── ModeSelector ──
 function ModeSelector({mode, onMode, customN, onCustomN}) {
-  const hints = {daily:'каждый день',change:'вместе с подменой воды',custom:'в указанные дни'};
   const pill = (k, label) => (
     <button key={k} onClick={() => onMode(k)} style={{
       padding:'7px 13px',border:`1.5px solid ${mode===k?'#A8E8F8':'#DDE5F0'}`,
@@ -170,7 +169,6 @@ function ModeSelector({mode, onMode, customN, onCustomN}) {
         {pill('change','Вместе с подменой')}
         {pill('custom','Раз в')}
       </div>
-      <div style={{fontSize:11,color:'#94A3B8',fontFamily:"'Inter',sans-serif",marginTop:2}}>{hints[mode]}</div>
     </div>
   );
 }
