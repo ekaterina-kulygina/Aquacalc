@@ -335,8 +335,8 @@ function App() {
         </div>
         <div style={secBody}>
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
-            <InputField label="Объём аквариума" unit="литров" placeholder="80" value={vol} onChange={setVol}/>
-            <InputField label="Объём подменной воды" unit="литров" placeholder="20" value={cvol} onChange={setCvol}/>
+            <InputField label="Объём аквариума" unit="литров, например 80" value={vol} onChange={setVol}/>
+            <InputField label="Объём подменной воды" unit="литров, например 20" value={cvol} onChange={setCvol}/>
           </div>
         </div>
       </div>
@@ -348,7 +348,7 @@ function App() {
           <div style={secTitle}>Режим</div>
         </div>
         <div style={secBody}>
-          <InputField label="Подмена воды раз в" unit="дней" placeholder="7" value={period} onChange={setPeriod}/>
+          <InputField label="Подмена воды раз в" unit="дней, например 7" value={period} onChange={setPeriod}/>
           <ModeSelector mode={mode} onMode={setMode} customN={customN} onCustomN={setCustomN}/>
         </div>
       </div>
