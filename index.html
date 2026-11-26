@@ -36,10 +36,15 @@ nav{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;
 
 /* ── HERO ── */
 .hero{padding:0 24px;background:#F5F7FA}
-.hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;padding:80px 0}
+.hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:stretch;padding:80px 0}
+.hero-text{display:flex;flex-direction:column;align-items:flex-start}
+.hero-text .hero-copy p{margin-bottom:32px}
+.hero-perks{list-style:none;margin:0 0 24px;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.hero-perks li{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);border-radius:100px;padding:6px 10px;font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap}
+
 .hero-text .eyebrow{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);border-radius:100px;padding:5px 14px;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:24px;}
 .eyebrow-dot{width:8px;height:8px;border-radius:50%;background:var(--green);}
-.hero-text h1{font-family:'Nobile',sans-serif;font-size:clamp(32px,3.5vw,54px);font-weight:700;line-height:1.12;letter-spacing:-.02em;margin-bottom:20px}
+.hero-text h1{font-family:'Nobile',sans-serif;font-size:clamp(32px,3.5vw,44px);font-weight:700;line-height:1.12;letter-spacing:-.02em;margin-bottom:20px}
 .hero-text p{font-size:17px;color:var(--muted);margin-bottom:36px;line-height:1.7}
 .hero-buttons{display:flex;gap:12px;flex-wrap:wrap}
 .btn-primary{padding:14px 28px;background:#28B0D8;color:#fff;border-radius:13px;font-size:16px;font-weight:700;font-family:'Nobile',sans-serif;text-decoration:none;transition:all .15s;display:inline-block}
@@ -48,30 +53,33 @@ nav{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;
 .btn-ghost:hover{border-color:var(--blue);color:var(--blue);background:#EAF6FC}
 
 /* Calculator mockup */
-.hero-visual{background:#293852;border-radius:20px;padding:24px;}
-.mock-topbar{background:rgba(255,255,255,0.08);border-radius:10px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.mock-logo{font-family:'Nobile',sans-serif;font-size:14px;font-weight:700;color:#fff;display:flex;align-items:center;gap:6px}
-.mock-logo-icon{width:22px;height:22px;border-radius:6px;background:#28B0D8;display:flex;align-items:center;justify-content:center}
-.mock-pill{font-size:10px;color:#26D1FE;background:rgba(38,209,254,0.15);padding:3px 8px;border-radius:100px;border:1px solid rgba(38,209,254,0.3);font-weight:600}
-.mock-section{background:rgba(255,255,255,0.06);border-radius:10px;padding:12px 14px;margin-bottom:10px}
-.mock-sec-hdr{display:flex;align-items:center;gap:6px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.08)}
-.mock-badge{width:18px;height:18px;border-radius:50%;background:#28B0D8;color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:'Nobile',sans-serif}
-.mock-sec-title{font-size:9px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.08em;font-family:'Nobile',sans-serif}
-.mock-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.mock-field{display:flex;flex-direction:column;gap:3px}
-.mock-flbl{font-size:9px;color:rgba(255,255,255,0.4);font-family:'Inter',sans-serif}
-.mock-inp{background:rgba(255,255,255,0.08);border:1px solid rgba(40,176,216,0.3);border-radius:7px;padding:7px 10px;font-size:13px;font-weight:500;color:#fff;font-family:'Inter',sans-serif}
-.mock-inp.filled{background:rgba(40,176,216,0.15);border-color:rgba(40,176,216,0.5)}
-.mock-fert-row{display:flex;justify-content:space-between;align-items:center}
-.mock-fert-name{font-size:12px;font-weight:600;color:#fff;font-family:'Inter',sans-serif}
-.mock-fert-brand{font-size:10px;color:rgba(255,255,255,0.4)}
-.mock-btn{width:100%;padding:11px;background:#28B0D8;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;font-family:'Nobile',sans-serif;text-align:center;margin-top:4px;cursor:pointer}
+.hero-visual{min-width:0;background:#293852;border-radius:20px;padding:20px;display:flex;flex-direction:column;font-family:'Inter',sans-serif}
+.rc-tbl{background:#fff;border-radius:12px;overflow:hidden;flex:1;display:flex}
+.rc-tbl .rc-table{height:100%}
+.rc-head{padding:0 4px 16px}
+.rc-title{font-family:'Nobile',sans-serif;font-size:18px;font-weight:700;color:#fff;letter-spacing:-.01em;text-align:center;margin-bottom:10px}
+.rc-meta{font-size:13px;color:#A9B4C6;line-height:1.6;text-align:center}
+.rc-meta b{color:#fff}
+.rc-table{width:100%;border-collapse:collapse}
+.rc-table th{background:#F5F8FC;padding:12px 20px;font-size:11px;font-weight:700;color:#64748B;letter-spacing:.04em;text-align:right;border-bottom:1.5px solid #DDE5F0;vertical-align:top;line-height:1.35;font-family:'Nobile',sans-serif}
+.rc-unit{display:block;font-weight:500;color:#94A3B8;letter-spacing:0;margin-top:2px}
+.rc-table th:first-child,.rc-table td:first-child{text-align:left}
+.rc-table td{padding:12px 20px;white-space:nowrap;font-size:13px;text-align:right;color:#334155;border-bottom:1px solid #EEF2F8}
+.rc-table tr:last-child td{border-bottom:none}
+.rc-table td.rc-grp{padding:8px 20px;font-size:10px;font-weight:700;color:#94A3B8;letter-spacing:.1em;text-transform:uppercase;background:#F7F9FC;border-bottom:1px solid #DDE5F0;font-family:'Nobile',sans-serif;text-align:left}
+@media(max-width:1000px){.rc-table th,.rc-table td,.rc-table td.rc-grp{padding-left:14px;padding-right:14px}}
+@media(max-width:900px){.rc-table th,.rc-table td,.rc-table td.rc-grp{padding-left:10px;padding-right:10px}.rc-table td{font-size:12px;white-space:normal}.rc-el,.rc-el-name{font-size:12px}.rc-el{margin-left:4px}}
+.rc-el{font-size:13px;font-weight:500;color:#0F172A;margin-left:6px}
+.rc-el-name{font-size:13px;color:#64748B}
+.rc-table td.rc-muted{color:#94A3B8}
 
 /* ── BRANDS STRIP ── */
 .brands{background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:20px 24px}
 .brands-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
 .brands-label{font-size:12px;color:var(--muted);font-weight:500;margin-right:8px}
-.brand-chip{padding:6px 14px;border-radius:100px;background:var(--bg);border:1px solid var(--border);font-size:13px;font-weight:500;color:var(--muted)}
+.brand-chip{padding:7px 16px;border-radius:100px;font-size:13px;font-weight:700;font-family:'Nobile',sans-serif;background:#E0F6FC;color:#156A82}
+.brand-chip:nth-of-type(3n+2){background:#E8FAD8;color:#2E7A1E}
+.brand-chip:nth-of-type(3n){background:#EEEDFE;color:#534AB7}
 
 /* ── FEATURES ── */
 .section{padding:80px 24px;max-width:1100px;margin:0 auto}
@@ -149,43 +157,38 @@ footer{background:var(--blue-deep);padding:40px 24px}
 <div class="hero">
   <div class="hero-inner">
     <div class="hero-text">
-      <div class="eyebrow"><span class="eyebrow-dot"></span>Точный расчёт за 30 секунд</div>
-      <h1>Калькулятор удобрений для <span style="color:#28B0D8">аквариума</span></h1>
-      <p>Рассчитайте точную дозировку макро- и микроудобрений — с учётом объёма, режима подмены и совместимости составов.</p>
+      <ul class="hero-perks">
+        <li>Точный расчёт за&nbsp;30&nbsp;секунд</li>
+        <li>База из&nbsp;30+ удобрений</li>
+        <li>Без подписки</li>
+      </ul>
+      <div class="hero-copy">
+        <h1>Калькулятор удобрений для аквариума</h1>
+        <p>Рассчитайте точную дозировку макро- и&nbsp;микроудобрений для&nbsp;вашего аквариума&nbsp;— с&nbsp;учётом объёма аквариума, режима подмены воды и&nbsp;совместимости удобрений разных брендов.</p>
+      </div>
       <div class="hero-buttons">
         <a href="register.html" class="btn-primary">Начать бесплатно</a>
         <a href="#how" class="btn-ghost">Как работает</a>
       </div>
     </div>
-    <div class="hero-visual">
-      <div class="mock-topbar">
-        <div class="mock-logo">
-          <div class="mock-logo-icon"><svg width="11" height="11" viewBox="0 0 15 15" fill="none"><path d="M3 12V5.5l4.5-4L12 5.5V12M5.5 12V9h4v3" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          Aqua<span style="color:#26D1FE">Calc</span>
+    <div class="hero-visual" aria-label="Пример расчёта">
+      <div class="rc-head">
+        <div class="rc-title">Концентрации элементов в&nbsp;аквариуме</div>
+        <div class="rc-meta">
+          Аквариум <b>80&nbsp;л</b> · подмена <b>20&nbsp;л</b> раз в&nbsp;<b>7&nbsp;дней</b>
         </div>
       </div>
-      <div class="mock-section">
-        <div class="mock-sec-hdr"><div class="mock-badge">1</div><div class="mock-sec-title">Аквариум</div></div>
-        <div class="mock-row">
-          <div class="mock-field"><div class="mock-flbl">Объём аквариума</div><div class="mock-inp filled">80</div></div>
-          <div class="mock-field"><div class="mock-flbl">Объём подмены</div><div class="mock-inp filled">20</div></div>
-        </div>
-      </div>
-      <div class="mock-section">
-        <div class="mock-sec-hdr"><div class="mock-badge">3</div><div class="mock-sec-title">Удобрения</div></div>
-        <div style="display:flex;flex-direction:column;gap:6px">
-          <div class="mock-fert-row">
-            <div><div class="mock-fert-name">Aquayer Macro</div><div class="mock-fert-brand">Aquayer</div></div>
-            <div class="mock-inp filled" style="width:58px;text-align:right;font-size:13px">5</div>
-          </div>
-          <div class="mock-fert-row">
-            <div><div class="mock-fert-name">Aquayer Micro</div><div class="mock-fert-brand">Aquayer</div></div>
-            <div class="mock-inp filled" style="width:58px;text-align:right;font-size:13px">3</div>
-          </div>
-        </div>
-      </div>
-      <div style="text-align:center;margin-top:4px">
-        <a href="register.html" class="btn-primary">Рассчитать</a>
+      <div class="rc-tbl">
+      <table class="rc-table">
+        <thead><tr><th>Элемент</th><th>В день<span class="rc-unit">мг/л</span></th><th>Общая доза<span class="rc-unit">мг/л</span></th><th>Доза в подмене<span class="rc-unit">мг/л</span></th></tr></thead>
+        <tbody>
+          <tr><td class="rc-grp" colspan="4">Макроэлементы</td></tr>
+          <tr><td><span class="rc-el-name">Нитрат</span><span class="rc-el">NO₃</span></td><td>0.1</td><td>1.0</td><td class="rc-muted">+0.3 мг/л</td></tr>
+          <tr><td><span class="rc-el-name">Калий</span><span class="rc-el">K</span></td><td>0.1</td><td>0.8</td><td class="rc-muted">+0.2 мг/л</td></tr>
+          <tr><td class="rc-grp" colspan="4">Микроэлементы</td></tr>
+          <tr><td><span class="rc-el-name">Железо</span><span class="rc-el">Fe</span></td><td>0.01</td><td>0.07</td><td class="rc-muted">+0.02 мг/л</td></tr>
+        </tbody>
+      </table>
       </div>
     </div>
   </div>
