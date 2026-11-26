@@ -37,11 +37,12 @@ nav{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;
 /* ── HERO ── */
 .hero{padding:0 24px;background:#F5F7FA}
 .hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:stretch;padding:80px 0}
-.hero-text{display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between}
+.hero-text{display:flex;flex-direction:column;align-items:flex-start}
+.hero-text .hero-buttons{margin-top:auto}
 
 .hero-text .eyebrow{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);border-radius:100px;padding:5px 14px;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:24px;}
 .eyebrow-dot{width:8px;height:8px;border-radius:50%;background:var(--green);}
-.hero-text h1{font-family:'Nobile',sans-serif;font-size:clamp(32px,3.5vw,54px);font-weight:700;line-height:1.12;letter-spacing:-.02em;margin-bottom:20px}
+.hero-text h1{font-family:'Nobile',sans-serif;font-size:clamp(32px,3.5vw,44px);font-weight:700;line-height:1.12;letter-spacing:-.02em;margin-bottom:20px}
 .hero-text p{font-size:17px;color:var(--muted);margin-bottom:36px;line-height:1.7}
 .hero-buttons{display:flex;gap:12px;flex-wrap:wrap}
 .btn-primary{padding:14px 28px;background:#28B0D8;color:#fff;border-radius:13px;font-size:16px;font-weight:700;font-family:'Nobile',sans-serif;text-decoration:none;transition:all .15s;display:inline-block}
@@ -50,19 +51,19 @@ nav{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;
 .btn-ghost:hover{border-color:var(--blue);color:var(--blue);background:#EAF6FC}
 
 /* Calculator mockup */
-.hero-visual{min-width:0;background:#293852;border-radius:20px;padding:24px;font-family:'Inter',sans-serif}
+.hero-visual{min-width:0;background:#293852;border-radius:20px;padding:20px;font-family:'Inter',sans-serif}
 .rc-tbl{background:#fff;border-radius:12px;overflow:hidden}
-.rc-head{padding:0 4px 18px}
-.rc-title{font-family:'Nobile',sans-serif;font-size:18px;font-weight:700;color:#fff;letter-spacing:-.01em;text-align:center;margin-bottom:10px}
-.rc-meta{font-size:13px;color:#A9B4C6;line-height:1.8}
+.rc-head{padding:0 4px 14px}
+.rc-title{font-family:'Nobile',sans-serif;font-size:18px;font-weight:700;color:#fff;letter-spacing:-.01em;text-align:center;margin-bottom:8px}
+.rc-meta{font-size:13px;color:#A9B4C6;line-height:1.6;text-align:center}
 .rc-meta b{color:#fff}
 .rc-table{width:100%;border-collapse:collapse}
-.rc-table th{background:#F5F8FC;padding:12px 14px;font-size:11px;font-weight:700;color:#64748B;letter-spacing:.04em;text-align:right;border-bottom:1.5px solid #DDE5F0;vertical-align:bottom;line-height:1.35;font-family:'Nobile',sans-serif}
+.rc-table th{background:#F5F8FC;padding:10px 14px;font-size:11px;font-weight:700;color:#64748B;letter-spacing:.04em;text-align:right;border-bottom:1.5px solid #DDE5F0;vertical-align:bottom;line-height:1.35;font-family:'Nobile',sans-serif}
 .rc-unit{display:block;font-weight:500;color:#94A3B8;letter-spacing:0;margin-top:2px}
 .rc-table th:first-child,.rc-table td:first-child{text-align:left}
-.rc-table td{padding:14px;white-space:nowrap;font-size:13px;text-align:right;color:#334155;border-bottom:1px solid #EEF2F8}
+.rc-table td{padding:11px 14px;white-space:nowrap;font-size:13px;text-align:right;color:#334155;border-bottom:1px solid #EEF2F8}
 .rc-table tr:last-child td{border-bottom:none}
-.rc-table td.rc-grp{padding:9px 14px;font-size:10px;font-weight:700;color:#94A3B8;letter-spacing:.1em;text-transform:uppercase;background:#F7F9FC;border-bottom:1px solid #DDE5F0;font-family:'Nobile',sans-serif;text-align:left}
+.rc-table td.rc-grp{padding:7px 14px;font-size:10px;font-weight:700;color:#94A3B8;letter-spacing:.1em;text-transform:uppercase;background:#F7F9FC;border-bottom:1px solid #DDE5F0;font-family:'Nobile',sans-serif;text-align:left}
 .rc-el{font-size:15px;font-weight:700;color:#0F172A;font-family:'Nobile',sans-serif}
 .rc-el-name{font-size:11px;color:#94A3B8;margin-left:8px}
 .rc-table td.rc-muted{color:#94A3B8}
@@ -165,9 +166,7 @@ footer{background:var(--blue-deep);padding:40px 24px}
       <div class="rc-head">
         <div class="rc-title">Концентрации элементов в&nbsp;аквариуме</div>
         <div class="rc-meta">
-          <div>Аквариум <b>80 л</b></div>
-          <div>Подмена <b>20 л</b> раз в <b>7 дней</b></div>
-          <div>Режим подачи удобрений: <b>при подмене раз в 7 дней</b></div>
+          Аквариум <b>80&nbsp;л</b> · подмена <b>20&nbsp;л</b> раз в&nbsp;<b>7&nbsp;дней</b>
         </div>
       </div>
       <div class="rc-tbl">
