@@ -39,7 +39,7 @@ nav{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;
 .hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:stretch;padding:80px 0}
 .hero-text{display:flex;flex-direction:column;align-items:flex-start}
 .hero-text .hero-copy p{margin-bottom:32px}
-.hero-perks{list-style:none;margin:auto 0 0;padding:28px 0 0;display:flex;flex-wrap:wrap;gap:6px}
+.hero-perks{list-style:none;margin:0;padding:24px 0 0;display:flex;flex-wrap:wrap;gap:6px}
 .hero-perks li{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);border-radius:100px;padding:6px 10px;font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap}
 .hero-perks li::before{content:"";width:12px;height:12px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M2.5 6.2l2.3 2.3 4.7-4.9' stroke='%2328B0D8' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center}
 
@@ -54,20 +54,20 @@ nav{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;
 .btn-ghost:hover{border-color:var(--blue);color:var(--blue);background:#EAF6FC}
 
 /* Calculator mockup */
-.hero-visual{min-width:0;background:#293852;border-radius:20px;padding:24px;display:flex;flex-direction:column;font-family:'Inter',sans-serif}
+.hero-visual{min-width:0;background:#293852;border-radius:20px;padding:20px;display:flex;flex-direction:column;font-family:'Inter',sans-serif}
 .rc-tbl{background:#fff;border-radius:12px;overflow:hidden;flex:1;display:flex}
 .rc-tbl .rc-table{height:100%}
-.rc-head{padding:0 4px 18px}
+.rc-head{padding:0 4px 16px}
 .rc-title{font-family:'Nobile',sans-serif;font-size:18px;font-weight:700;color:#fff;letter-spacing:-.01em;text-align:center;margin-bottom:10px}
-.rc-meta{font-size:13px;color:#A9B4C6;line-height:1.8}
+.rc-meta{font-size:13px;color:#A9B4C6;line-height:1.6;text-align:center}
 .rc-meta b{color:#fff}
 .rc-table{width:100%;border-collapse:collapse}
-.rc-table th{background:#F5F8FC;padding:14px 20px;font-size:11px;font-weight:700;color:#64748B;letter-spacing:.04em;text-align:right;border-bottom:1.5px solid #DDE5F0;vertical-align:top;line-height:1.35;font-family:'Nobile',sans-serif}
+.rc-table th{background:#F5F8FC;padding:12px 20px;font-size:11px;font-weight:700;color:#64748B;letter-spacing:.04em;text-align:right;border-bottom:1.5px solid #DDE5F0;vertical-align:top;line-height:1.35;font-family:'Nobile',sans-serif}
 .rc-unit{display:block;font-weight:500;color:#94A3B8;letter-spacing:0;margin-top:2px}
 .rc-table th:first-child,.rc-table td:first-child{text-align:left}
-.rc-table td{padding:16px 20px;white-space:nowrap;font-size:13px;text-align:right;color:#334155;border-bottom:1px solid #EEF2F8}
+.rc-table td{padding:12px 20px;white-space:nowrap;font-size:13px;text-align:right;color:#334155;border-bottom:1px solid #EEF2F8}
 .rc-table tr:last-child td{border-bottom:none}
-.rc-table td.rc-grp{padding:10px 20px;font-size:10px;font-weight:700;color:#94A3B8;letter-spacing:.1em;text-transform:uppercase;background:#F7F9FC;border-bottom:1px solid #DDE5F0;font-family:'Nobile',sans-serif;text-align:left}
+.rc-table td.rc-grp{padding:8px 20px;font-size:10px;font-weight:700;color:#94A3B8;letter-spacing:.1em;text-transform:uppercase;background:#F7F9FC;border-bottom:1px solid #DDE5F0;font-family:'Nobile',sans-serif;text-align:left}
 @media(max-width:1000px){.rc-table th,.rc-table td,.rc-table td.rc-grp{padding-left:14px;padding-right:14px}}
 @media(max-width:900px){.rc-table th,.rc-table td,.rc-table td.rc-grp{padding-left:10px;padding-right:10px}.rc-table td{font-size:12px;white-space:normal}.rc-el,.rc-el-name{font-size:12px}.rc-el{margin-left:4px}}
 .rc-el{font-size:13px;font-weight:500;color:#0F172A;margin-left:6px}
@@ -174,9 +174,7 @@ footer{background:var(--blue-deep);padding:40px 24px}
       <div class="rc-head">
         <div class="rc-title">Концентрации элементов в&nbsp;аквариуме</div>
         <div class="rc-meta">
-          <div>Аквариум <b>80 л</b></div>
-          <div>Подмена <b>20 л</b> раз в <b>7 дней</b></div>
-          <div>Режим подачи удобрений: <b>при подмене раз в 7 дней</b></div>
+          Аквариум <b>80&nbsp;л</b> · подмена <b>20&nbsp;л</b> раз в&nbsp;<b>7&nbsp;дней</b>
         </div>
       </div>
       <div class="rc-tbl">
