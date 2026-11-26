@@ -373,7 +373,8 @@ function App() {
                   ))}
                 </div>
               </div>
-              <table style={{width:'100%',borderCollapse:'collapse',border:'1.5px solid #DDE5F0',borderRadius:12,overflow:'hidden'}}>
+              <div style={{border:'1.5px solid #DDE5F0',borderRadius:12,overflow:'hidden',marginBottom:20}}>
+              <table style={{width:'100%',borderCollapse:'collapse'}}>
                 <thead>
                   <tr>
                     <th style={{background:'#F5F8FC',padding:'9px 12px',fontSize:11,fontWeight:700,color:'#64748B',letterSpacing:'.05em',textAlign:'left',borderBottom:'1.5px solid #DDE5F0',fontFamily:"'Nobile',sans-serif"}}>Удобрение</th>
@@ -416,6 +417,7 @@ function App() {
                   ))}
                 </tbody>
               </table>
+              </div>
             </>
           )}
           <FertDropdown usedIds={entries.map(e=>e.id)} onPick={pickFert}/>
