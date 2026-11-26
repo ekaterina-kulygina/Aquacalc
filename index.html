@@ -48,13 +48,15 @@ nav{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;
 .btn-ghost:hover{border-color:var(--blue);color:var(--blue);background:#EAF6FC}
 
 /* Calculator mockup */
-.hero-visual{min-width:0;background:#fff;border:1.5px solid #DDE5F0;border-radius:16px;overflow:hidden;font-family:'Inter',sans-serif}
-.rc-head{padding:18px 20px 14px;border-bottom:1.5px solid #DDE5F0}
-.rc-title{font-family:'Nobile',sans-serif;font-size:18px;font-weight:700;color:#0F172A;letter-spacing:-.01em;text-align:center;margin-bottom:10px}
-.rc-meta{font-size:13px;color:#64748B;line-height:1.8}
-.rc-meta b{color:#0F172A}
+.hero-visual{min-width:0;background:#293852;border-radius:20px;padding:24px;font-family:'Inter',sans-serif}
+.rc-tbl{background:#fff;border-radius:12px;overflow:hidden}
+.rc-head{padding:0 4px 18px}
+.rc-title{font-family:'Nobile',sans-serif;font-size:18px;font-weight:700;color:#fff;letter-spacing:-.01em;text-align:center;margin-bottom:10px}
+.rc-meta{font-size:13px;color:#A9B4C6;line-height:1.8}
+.rc-meta b{color:#fff}
 .rc-table{width:100%;border-collapse:collapse}
 .rc-table th{background:#F5F8FC;padding:12px 14px;font-size:11px;font-weight:700;color:#64748B;letter-spacing:.04em;text-align:right;border-bottom:1.5px solid #DDE5F0;vertical-align:bottom;line-height:1.35;font-family:'Nobile',sans-serif}
+.rc-unit{display:block;font-weight:500;color:#94A3B8;letter-spacing:0;margin-top:2px}
 .rc-table th:first-child,.rc-table td:first-child{text-align:left}
 .rc-table td{padding:14px;white-space:nowrap;font-size:13px;text-align:right;color:#334155;border-bottom:1px solid #EEF2F8}
 .rc-table tr:last-child td{border-bottom:none}
@@ -164,8 +166,9 @@ footer{background:var(--blue-deep);padding:40px 24px}
           <div>Режим подачи удобрений: <b>при подмене раз в 7 дней</b></div>
         </div>
       </div>
+      <div class="rc-tbl">
       <table class="rc-table">
-        <thead><tr><th>Элемент</th><th>В день, мг/л</th><th>Общая доза, мг/л</th><th>Доза в подмене, мг/л</th></tr></thead>
+        <thead><tr><th>Элемент</th><th>В день<span class="rc-unit">мг/л</span></th><th>Общая доза<span class="rc-unit">мг/л</span></th><th>Доза в подмене<span class="rc-unit">мг/л</span></th></tr></thead>
         <tbody>
           <tr><td class="rc-grp" colspan="4">Макроэлементы</td></tr>
           <tr><td><span class="rc-el">NO₃</span><span class="rc-el-name">Нитрат</span></td><td>0.1</td><td>1.0</td><td class="rc-muted">+0.3 мг/л</td></tr>
@@ -174,6 +177,7 @@ footer{background:var(--blue-deep);padding:40px 24px}
           <tr><td><span class="rc-el">Fe</span><span class="rc-el-name">Железо</span></td><td>0.01</td><td>0.07</td><td><span class="rc-ok">оптим.</span></td></tr>
         </tbody>
       </table>
+      </div>
     </div>
   </div>
 </div>
