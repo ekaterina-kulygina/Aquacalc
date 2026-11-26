@@ -109,15 +109,9 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 24px;height:
 
   <div class="right-panel">
     <div class="form-wrap">
-      <div class="form-tabs">
-        <button class="tab active" id="tab-reg" onclick="showTab('reg')">Регистрация</button>
-        <button class="tab" id="tab-pay" onclick="showTab('pay')">Оплата</button>
-      </div>
-
       <!-- Форма регистрации -->
       <div id="form-reg">
-        <div class="form-title">Создать аккаунт</div>
-        <div class="form-sub">Доступ на 24 часа — 99 ₽</div>
+        <div class="form-title" style="margin-bottom:28px">Создать аккаунт</div>
         <div class="field">
           <label class="flbl">Email</label>
           <input class="finput" type="email" placeholder="you@example.com">
@@ -194,8 +188,6 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 24px;height:
 function showTab(t) {
   document.getElementById('form-reg').style.display = t === 'reg' ? '' : 'none';
   document.getElementById('form-pay').style.display = t === 'pay' ? '' : 'none';
-  document.getElementById('tab-reg').classList.toggle('active', t === 'reg');
-  document.getElementById('tab-pay').classList.toggle('active', t === 'pay');
 }
 </script>
 </body>
