@@ -29,8 +29,10 @@ nav{background:#fff;border-bottom:1px solid #DDE5F0;position:sticky;top:0;z-inde
 .nav-btn-primary{background:linear-gradient(135deg,#28B0D8,#1A8FB2);color:#fff;border:none;font-weight:600;box-shadow:0 2px 8px rgba(40,176,216,.3);font-family:'Nobile',sans-serif}
 .nav-btn-primary:hover{background:linear-gradient(135deg,#1A8FB2,#126E8A)}
 
+</style>
 <style>
 input::placeholder { color: #B3BFCC !important; opacity: 1; }
+.aq-input::placeholder { font-size: 12px; }
 </style>
 </head>
 <body>
@@ -123,7 +125,7 @@ function InputField({label, unit, value, onChange, placeholder}) {
     <div style={{display:'flex',flexDirection:'column',gap:4}}>
       <div style={{fontSize:12,color:'#64748B',fontWeight:500,fontFamily:"'Inter',sans-serif"}}>{label}</div>
       <input
-        type="number" min="1" placeholder={placeholder} value={value}
+        className="aq-input" type="number" min="1" placeholder={placeholder} value={value}
         onChange={e => onChange(e.target.value)}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
@@ -334,8 +336,8 @@ function App() {
         </div>
         <div style={secBody}>
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
-            <InputField label="Объём аквариума" unit="литров" placeholder="80" value={vol} onChange={setVol}/>
-            <InputField label="Объём подменной воды" unit="литров" placeholder="20" value={cvol} onChange={setCvol}/>
+            <InputField label="Объём аквариума" unit="литров" placeholder="Например, 80" value={vol} onChange={setVol}/>
+            <InputField label="Объём подменной воды" unit="литров" placeholder="Например, 20" value={cvol} onChange={setCvol}/>
           </div>
         </div>
       </div>
@@ -347,7 +349,7 @@ function App() {
           <div style={secTitle}>Режим</div>
         </div>
         <div style={secBody}>
-          <InputField label="Подмена воды раз в" unit="дней" placeholder="7" value={period} onChange={setPeriod}/>
+          <InputField label="Подмена воды раз в" unit="дней" placeholder="Например, 7" value={period} onChange={setPeriod}/>
           <ModeSelector mode={mode} onMode={setMode} customN={customN} onCustomN={setCustomN}/>
         </div>
       </div>
